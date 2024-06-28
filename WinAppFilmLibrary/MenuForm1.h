@@ -83,6 +83,7 @@ namespace WinAppFilmLibrary {
 			this->button_Editing->TabIndex = 1;
 			this->button_Editing->Text = L"Изменить базу фильмов";
 			this->button_Editing->UseVisualStyleBackColor = true;
+			this->button_Editing->Click += gcnew System::EventHandler(this, &MenuForm1::button_Editing_Click);
 			// 
 			// button_Search
 			// 
@@ -108,5 +109,6 @@ namespace WinAppFilmLibrary {
 		}
 #pragma endregion
 	private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void button_Editing_Click(System::Object^ sender, System::EventArgs^ e);
 	};
 };

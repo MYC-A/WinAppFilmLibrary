@@ -10,7 +10,7 @@ Movie::Movie(int Id, String^ Poster, String^ Title, DateTime Data, array<String^
     this->Rating = Rating;
     this->Annotation = Annotation;
     this->Release = true;
-    throw gcnew System::NotImplementedException();
+    return;
 }
 
 

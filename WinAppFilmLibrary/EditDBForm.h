@@ -1,4 +1,5 @@
 #pragma once
+#include "Storage.h"
 
 namespace WinAppFilmLibrary {
 
@@ -15,13 +16,16 @@ namespace WinAppFilmLibrary {
 	public ref class EditDBForm : public System::Windows::Forms::Form
 	{
 	public:
-		EditDBForm(void)
+		EditDBForm(Storage^ sr)
 		{
 			InitializeComponent();
+			this -> sr = sr;
+			UpdateListView();
 			//
 			//TODO: добавьте код конструктора
 			//
 		}
+		void UpdateListView();
 
 	protected:
 		/// <summary>
@@ -34,6 +38,32 @@ namespace WinAppFilmLibrary {
 				delete components;
 			}
 		}
+	public: Storage^ sr;
+	private: System::Windows::Forms::ListView^ listView;
+	protected:
+
+	protected:
+	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
+	private: System::Windows::Forms::ColumnHeader^ Poster;
+	private: System::Windows::Forms::ColumnHeader^ Title;
+	private: System::Windows::Forms::ColumnHeader^ Data;
+	private: System::Windows::Forms::ColumnHeader^ Genre;
+	private: System::Windows::Forms::ColumnHeader^ Rating;
+	private: System::Windows::Forms::Button^ button_Insert;
+	private: System::Windows::Forms::Button^ button_Delete;
+	private: System::Windows::Forms::Button^ button_Rearward;
+
+	protected:
+
+
+
+
+
+	protected:
+
+
+
+	protected:
 
 	private:
 		/// <summary>
@@ -48,18 +78,103 @@ namespace WinAppFilmLibrary {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->listView = (gcnew System::Windows::Forms::ListView());
+			this->Poster = (gcnew System::Windows::Forms::ColumnHeader());
+			this->Title = (gcnew System::Windows::Forms::ColumnHeader());
+			this->Data = (gcnew System::Windows::Forms::ColumnHeader());
+			this->Genre = (gcnew System::Windows::Forms::ColumnHeader());
+			this->Rating = (gcnew System::Windows::Forms::ColumnHeader());
+			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
+			this->button_Insert = (gcnew System::Windows::Forms::Button());
+			this->button_Delete = (gcnew System::Windows::Forms::Button());
+			this->button_Rearward = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
+			// 
+			// listView
+			// 
+			this->listView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(5) {
+				this->Poster, this->Title,
+					this->Data, this->Genre, this->Rating
+			});
+			this->listView->GridLines = true;
+			this->listView->HideSelection = false;
+			this->listView->Location = System::Drawing::Point(12, 30);
+			this->listView->Name = L"listView";
+			this->listView->Size = System::Drawing::Size(640, 430);
+			this->listView->TabIndex = 0;
+			this->listView->UseCompatibleStateImageBehavior = false;
+			this->listView->View = System::Windows::Forms::View::Details;
+			this->listView->SelectedIndexChanged += gcnew System::EventHandler(this, &EditDBForm::listView_SelectedIndexChanged);
+			this->listView->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &EditDBForm::listView_MouseDoubleClick);
+			// 
+			// Poster
+			// 
+			this->Poster->Text = L"Постер";
+			// 
+			// Title
+			// 
+			this->Title->Text = L"Название";
+			// 
+			// Data
+			// 
+			this->Data->Text = L"Дата выхода в прокат";
+			// 
+			// Genre
+			// 
+			this->Genre->Text = L"Жанр";
+			// 
+			// Rating
+			// 
+			this->Rating->Text = L"Рейтинг";
+			// 
+			// button_Insert
+			// 
+			this->button_Insert->Location = System::Drawing::Point(671, 61);
+			this->button_Insert->Name = L"button_Insert";
+			this->button_Insert->Size = System::Drawing::Size(118, 46);
+			this->button_Insert->TabIndex = 1;
+			this->button_Insert->Text = L"Добавить";
+			this->button_Insert->UseVisualStyleBackColor = true;
+			this->button_Insert->Click += gcnew System::EventHandler(this, &EditDBForm::button_Insert_Click);
+			// 
+			// button_Delete
+			// 
+			this->button_Delete->Location = System::Drawing::Point(671, 202);
+			this->button_Delete->Name = L"button_Delete";
+			this->button_Delete->Size = System::Drawing::Size(118, 46);
+			this->button_Delete->TabIndex = 2;
+			this->button_Delete->Text = L"Удалить";
+			this->button_Delete->UseVisualStyleBackColor = true;
+			// 
+			// button_Rearward
+			// 
+			this->button_Rearward->Location = System::Drawing::Point(671, 414);
+			this->button_Rearward->Name = L"button_Rearward";
+			this->button_Rearward->Size = System::Drawing::Size(118, 46);
+			this->button_Rearward->TabIndex = 3;
+			this->button_Rearward->Text = L"Назад";
+			this->button_Rearward->UseVisualStyleBackColor = true;
 			// 
 			// EditDBForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(569, 404);
+			this->ClientSize = System::Drawing::Size(812, 487);
+			this->Controls->Add(this->button_Rearward);
+			this->Controls->Add(this->button_Delete);
+			this->Controls->Add(this->button_Insert);
+			this->Controls->Add(this->listView);
 			this->Name = L"EditDBForm";
 			this->Text = L"EditDBForm";
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	};
+	
+	private: System::Void button_Insert_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void listView_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+
+}
+private: System::Void listView_MouseDoubleClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+};
 }

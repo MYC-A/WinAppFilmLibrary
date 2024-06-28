@@ -24,7 +24,7 @@ void Storage::save_Movie(Movie^ newMovie)
     sw->WriteLine("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", newMovie->Id, newMovie->Poster, newMovie->Title, newMovie->Data.ToString(), String::Join(", ", newMovie->Genre), newMovie->Rating, newMovie->Annotation, newMovie->Release);
     sw->Close();
 
-    throw gcnew System::NotImplementedException();
+    return;
 }
 
 
@@ -37,9 +37,9 @@ void Storage::load_Movie()
 {
     StreamReader^ sr = gcnew StreamReader("C:\\Movie_Library\\DB\\MovieDB.txt");
     String^ line;
-    Movie^ movie = gcnew Movie();
 
     while ((line = sr->ReadLine()) != nullptr) {
+        Movie^ movie = gcnew Movie();
         //if (line == "") {
         //	break;
         //}
