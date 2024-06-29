@@ -77,7 +77,7 @@ namespace WinAppFilmLibrary {
 			// 
 			// button_Editing
 			// 
-			this->button_Editing->Location = System::Drawing::Point(552, 181);
+			this->button_Editing->Location = System::Drawing::Point(552, 186);
 			this->button_Editing->Name = L"button_Editing";
 			this->button_Editing->Size = System::Drawing::Size(108, 47);
 			this->button_Editing->TabIndex = 1;
@@ -87,7 +87,7 @@ namespace WinAppFilmLibrary {
 			// 
 			// button_Search
 			// 
-			this->button_Search->Location = System::Drawing::Point(552, 64);
+			this->button_Search->Location = System::Drawing::Point(552, 54);
 			this->button_Search->Name = L"button_Search";
 			this->button_Search->Size = System::Drawing::Size(108, 47);
 			this->button_Search->TabIndex = 2;

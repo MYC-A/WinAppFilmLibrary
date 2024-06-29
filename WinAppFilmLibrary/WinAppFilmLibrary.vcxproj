@@ -26,14 +26,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CardForm.cpp" />
     <ClCompile Include="EditDBForm.cpp" />
     <ClCompile Include="InsertForm.cpp" />
     <ClCompile Include="MenuForm1.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="SearcForm.cpp" />
     <ClCompile Include="Storage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CardForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="EditDBForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -47,9 +52,15 @@
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="SearcForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Storage.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CardForm.resx">
+      <DependentUpon>CardForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditDBForm.resx">
       <DependentUpon>EditDBForm.h</DependentUpon>
     </EmbeddedResource>

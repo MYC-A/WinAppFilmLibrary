@@ -66,6 +66,19 @@ List<Movie^>^ Storage::find_Movie(String^ Title, DateTime Data, String^ Genre)
     // TODO: вставьте здесь оператор return
 }
 
+Movie^ Storage::find_Movie_index(int index)
+{
+    for each (Movie ^ movie in movieList) {
+        if (movie->Id == index) {
+            return movie;
+        }
+        
+    }
+    return gcnew Movie();
+}
+
+
+
 List<Movie^>^ Storage::find_UnRelease_Movie()
 {
     throw gcnew System::NotImplementedException();

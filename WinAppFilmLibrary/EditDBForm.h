@@ -52,6 +52,7 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::Button^ button_Insert;
 	private: System::Windows::Forms::Button^ button_Delete;
 	private: System::Windows::Forms::Button^ button_Rearward;
+	private: System::Windows::Forms::Button^ button1_Duplicate;
 
 	protected:
 
@@ -88,6 +89,7 @@ namespace WinAppFilmLibrary {
 			this->button_Insert = (gcnew System::Windows::Forms::Button());
 			this->button_Delete = (gcnew System::Windows::Forms::Button());
 			this->button_Rearward = (gcnew System::Windows::Forms::Button());
+			this->button1_Duplicate = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// listView
@@ -96,11 +98,12 @@ namespace WinAppFilmLibrary {
 				this->Poster, this->Title,
 					this->Data, this->Genre, this->Rating
 			});
+			this->listView->FullRowSelect = true;
 			this->listView->GridLines = true;
 			this->listView->HideSelection = false;
 			this->listView->Location = System::Drawing::Point(12, 30);
 			this->listView->Name = L"listView";
-			this->listView->Size = System::Drawing::Size(640, 430);
+			this->listView->Size = System::Drawing::Size(735, 499);
 			this->listView->TabIndex = 0;
 			this->listView->UseCompatibleStateImageBehavior = false;
 			this->listView->View = System::Windows::Forms::View::Details;
@@ -110,26 +113,31 @@ namespace WinAppFilmLibrary {
 			// Poster
 			// 
 			this->Poster->Text = L"Постер";
+			this->Poster->Width = 153;
 			// 
 			// Title
 			// 
 			this->Title->Text = L"Название";
+			this->Title->Width = 147;
 			// 
 			// Data
 			// 
 			this->Data->Text = L"Дата выхода в прокат";
+			this->Data->Width = 162;
 			// 
 			// Genre
 			// 
 			this->Genre->Text = L"Жанр";
+			this->Genre->Width = 129;
 			// 
 			// Rating
 			// 
 			this->Rating->Text = L"Рейтинг";
+			this->Rating->Width = 143;
 			// 
 			// button_Insert
 			// 
-			this->button_Insert->Location = System::Drawing::Point(671, 61);
+			this->button_Insert->Location = System::Drawing::Point(753, 30);
 			this->button_Insert->Name = L"button_Insert";
 			this->button_Insert->Size = System::Drawing::Size(118, 46);
 			this->button_Insert->TabIndex = 1;
@@ -139,27 +147,39 @@ namespace WinAppFilmLibrary {
 			// 
 			// button_Delete
 			// 
-			this->button_Delete->Location = System::Drawing::Point(671, 202);
+			this->button_Delete->Location = System::Drawing::Point(753, 179);
 			this->button_Delete->Name = L"button_Delete";
 			this->button_Delete->Size = System::Drawing::Size(118, 46);
 			this->button_Delete->TabIndex = 2;
 			this->button_Delete->Text = L"Удалить";
 			this->button_Delete->UseVisualStyleBackColor = true;
+			this->button_Delete->Click += gcnew System::EventHandler(this, &EditDBForm::button_Delete_Click);
 			// 
 			// button_Rearward
 			// 
-			this->button_Rearward->Location = System::Drawing::Point(671, 414);
+			this->button_Rearward->Location = System::Drawing::Point(753, 483);
 			this->button_Rearward->Name = L"button_Rearward";
 			this->button_Rearward->Size = System::Drawing::Size(118, 46);
 			this->button_Rearward->TabIndex = 3;
 			this->button_Rearward->Text = L"Назад";
 			this->button_Rearward->UseVisualStyleBackColor = true;
 			// 
+			// button1_Duplicate
+			// 
+			this->button1_Duplicate->Location = System::Drawing::Point(753, 332);
+			this->button1_Duplicate->Name = L"button1_Duplicate";
+			this->button1_Duplicate->Size = System::Drawing::Size(118, 46);
+			this->button1_Duplicate->TabIndex = 4;
+			this->button1_Duplicate->Text = L"Удалить дубликаты";
+			this->button1_Duplicate->UseVisualStyleBackColor = true;
+			this->button1_Duplicate->Click += gcnew System::EventHandler(this, &EditDBForm::button1_Duplicate_Click);
+			// 
 			// EditDBForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(812, 487);
+			this->ClientSize = System::Drawing::Size(915, 541);
+			this->Controls->Add(this->button1_Duplicate);
 			this->Controls->Add(this->button_Rearward);
 			this->Controls->Add(this->button_Delete);
 			this->Controls->Add(this->button_Insert);
@@ -176,5 +196,7 @@ private: System::Void listView_SelectedIndexChanged(System::Object^ sender, Syst
 
 }
 private: System::Void listView_MouseDoubleClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+private: System::Void button_Delete_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void button1_Duplicate_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }

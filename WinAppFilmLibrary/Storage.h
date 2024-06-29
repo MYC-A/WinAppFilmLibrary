@@ -13,6 +13,7 @@ public:
 	void save_AllMovie(); //сохранение списка фильмов
 	void load_Movie(); //загрузка фильмов из файла 
 	List<Movie^>^ find_Movie(String^ Title, DateTime Data, String^ Genre);//Поиск фильма по названию, дате и жанру
+	Movie^ find_Movie_index(int index);//Поиск фильма по id
 	List<Movie^>^ find_UnRelease_Movie(); // Поиск не вышедших фильмов
 	Storage() {
 		movieList = gcnew List<Movie^>();
