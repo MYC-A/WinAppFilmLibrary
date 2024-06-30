@@ -61,6 +61,8 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::DateTimePicker^ dateTimePicker1;
 	private: System::Windows::Forms::Button^ button_Save;
 	private: System::Windows::Forms::Button^ button_Clear;
+	private: System::Windows::Forms::PictureBox^ pictureBox1_Poster;
+	private: System::Windows::Forms::Button^ button1_Load;
 		   /// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
@@ -87,12 +89,15 @@ namespace WinAppFilmLibrary {
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->button_Save = (gcnew System::Windows::Forms::Button());
 			this->button_Clear = (gcnew System::Windows::Forms::Button());
+			this->pictureBox1_Poster = (gcnew System::Windows::Forms::PictureBox());
+			this->button1_Load = (gcnew System::Windows::Forms::Button());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1_Poster))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label_Poster
 			// 
 			this->label_Poster->AutoSize = true;
-			this->label_Poster->Location = System::Drawing::Point(66, 40);
+			this->label_Poster->Location = System::Drawing::Point(65, 56);
 			this->label_Poster->Name = L"label_Poster";
 			this->label_Poster->Size = System::Drawing::Size(44, 13);
 			this->label_Poster->TabIndex = 0;
@@ -101,7 +106,7 @@ namespace WinAppFilmLibrary {
 			// label_Title
 			// 
 			this->label_Title->AutoSize = true;
-			this->label_Title->Location = System::Drawing::Point(66, 88);
+			this->label_Title->Location = System::Drawing::Point(61, 168);
 			this->label_Title->Name = L"label_Title";
 			this->label_Title->Size = System::Drawing::Size(57, 13);
 			this->label_Title->TabIndex = 1;
@@ -110,7 +115,7 @@ namespace WinAppFilmLibrary {
 			// label_Data
 			// 
 			this->label_Data->AutoSize = true;
-			this->label_Data->Location = System::Drawing::Point(66, 130);
+			this->label_Data->Location = System::Drawing::Point(61, 210);
 			this->label_Data->Name = L"label_Data";
 			this->label_Data->Size = System::Drawing::Size(73, 13);
 			this->label_Data->TabIndex = 2;
@@ -119,7 +124,7 @@ namespace WinAppFilmLibrary {
 			// label_Genre
 			// 
 			this->label_Genre->AutoSize = true;
-			this->label_Genre->Location = System::Drawing::Point(66, 174);
+			this->label_Genre->Location = System::Drawing::Point(61, 254);
 			this->label_Genre->Name = L"label_Genre";
 			this->label_Genre->Size = System::Drawing::Size(36, 13);
 			this->label_Genre->TabIndex = 3;
@@ -128,7 +133,7 @@ namespace WinAppFilmLibrary {
 			// label_Rating
 			// 
 			this->label_Rating->AutoSize = true;
-			this->label_Rating->Location = System::Drawing::Point(66, 210);
+			this->label_Rating->Location = System::Drawing::Point(61, 290);
 			this->label_Rating->Name = L"label_Rating";
 			this->label_Rating->Size = System::Drawing::Size(48, 13);
 			this->label_Rating->TabIndex = 4;
@@ -136,16 +141,17 @@ namespace WinAppFilmLibrary {
 			// 
 			// textBox_Annotation
 			// 
-			this->textBox_Annotation->Location = System::Drawing::Point(158, 251);
+			this->textBox_Annotation->Location = System::Drawing::Point(154, 341);
 			this->textBox_Annotation->Multiline = true;
 			this->textBox_Annotation->Name = L"textBox_Annotation";
 			this->textBox_Annotation->Size = System::Drawing::Size(356, 98);
 			this->textBox_Annotation->TabIndex = 5;
+			this->textBox_Annotation->TextChanged += gcnew System::EventHandler(this, &InsertForm::textBox_Annotation_TextChanged);
 			// 
 			// label_Annotation
 			// 
 			this->label_Annotation->AutoSize = true;
-			this->label_Annotation->Location = System::Drawing::Point(66, 254);
+			this->label_Annotation->Location = System::Drawing::Point(61, 334);
 			this->label_Annotation->Name = L"label_Annotation";
 			this->label_Annotation->Size = System::Drawing::Size(61, 13);
 			this->label_Annotation->TabIndex = 6;
@@ -157,38 +163,39 @@ namespace WinAppFilmLibrary {
 			this->textBox_Poster->Name = L"textBox_Poster";
 			this->textBox_Poster->Size = System::Drawing::Size(100, 20);
 			this->textBox_Poster->TabIndex = 7;
+			this->textBox_Poster->Visible = false;
 			// 
 			// textBox_Title
 			// 
-			this->textBox_Title->Location = System::Drawing::Point(167, 88);
+			this->textBox_Title->Location = System::Drawing::Point(162, 168);
 			this->textBox_Title->Name = L"textBox_Title";
-			this->textBox_Title->Size = System::Drawing::Size(100, 20);
+			this->textBox_Title->Size = System::Drawing::Size(200, 20);
 			this->textBox_Title->TabIndex = 8;
 			// 
 			// textBox_Genre
 			// 
-			this->textBox_Genre->Location = System::Drawing::Point(167, 167);
+			this->textBox_Genre->Location = System::Drawing::Point(162, 247);
 			this->textBox_Genre->Name = L"textBox_Genre";
-			this->textBox_Genre->Size = System::Drawing::Size(100, 20);
+			this->textBox_Genre->Size = System::Drawing::Size(200, 20);
 			this->textBox_Genre->TabIndex = 9;
 			// 
 			// textBox_Rating
 			// 
-			this->textBox_Rating->Location = System::Drawing::Point(167, 207);
+			this->textBox_Rating->Location = System::Drawing::Point(167, 287);
 			this->textBox_Rating->Name = L"textBox_Rating";
-			this->textBox_Rating->Size = System::Drawing::Size(100, 20);
+			this->textBox_Rating->Size = System::Drawing::Size(195, 20);
 			this->textBox_Rating->TabIndex = 10;
 			// 
 			// dateTimePicker1
 			// 
-			this->dateTimePicker1->Location = System::Drawing::Point(167, 130);
+			this->dateTimePicker1->Location = System::Drawing::Point(162, 210);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
 			this->dateTimePicker1->Size = System::Drawing::Size(200, 20);
 			this->dateTimePicker1->TabIndex = 11;
 			// 
 			// button_Save
 			// 
-			this->button_Save->Location = System::Drawing::Point(54, 368);
+			this->button_Save->Location = System::Drawing::Point(48, 455);
 			this->button_Save->Name = L"button_Save";
 			this->button_Save->Size = System::Drawing::Size(101, 40);
 			this->button_Save->TabIndex = 12;
@@ -198,18 +205,40 @@ namespace WinAppFilmLibrary {
 			// 
 			// button_Clear
 			// 
-			this->button_Clear->Location = System::Drawing::Point(478, 368);
+			this->button_Clear->Location = System::Drawing::Point(516, 455);
 			this->button_Clear->Name = L"button_Clear";
 			this->button_Clear->Size = System::Drawing::Size(101, 40);
 			this->button_Clear->TabIndex = 14;
 			this->button_Clear->Text = L"Отменить";
 			this->button_Clear->UseVisualStyleBackColor = true;
 			// 
+			// pictureBox1_Poster
+			// 
+			this->pictureBox1_Poster->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->pictureBox1_Poster->Location = System::Drawing::Point(162, 12);
+			this->pictureBox1_Poster->Name = L"pictureBox1_Poster";
+			this->pictureBox1_Poster->Size = System::Drawing::Size(200, 132);
+			this->pictureBox1_Poster->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->pictureBox1_Poster->TabIndex = 15;
+			this->pictureBox1_Poster->TabStop = false;
+			// 
+			// button1_Load
+			// 
+			this->button1_Load->Location = System::Drawing::Point(432, 37);
+			this->button1_Load->Name = L"button1_Load";
+			this->button1_Load->Size = System::Drawing::Size(78, 50);
+			this->button1_Load->TabIndex = 16;
+			this->button1_Load->Text = L"Загрузить";
+			this->button1_Load->UseVisualStyleBackColor = true;
+			this->button1_Load->Click += gcnew System::EventHandler(this, &InsertForm::button1_Load_Click);
+			// 
 			// InsertForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(605, 420);
+			this->ClientSize = System::Drawing::Size(689, 519);
+			this->Controls->Add(this->button1_Load);
+			this->Controls->Add(this->pictureBox1_Poster);
 			this->Controls->Add(this->button_Clear);
 			this->Controls->Add(this->button_Save);
 			this->Controls->Add(this->dateTimePicker1);
@@ -226,11 +255,17 @@ namespace WinAppFilmLibrary {
 			this->Controls->Add(this->label_Poster);
 			this->Name = L"InsertForm";
 			this->Text = L"InsertForm";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &InsertForm::InsertForm_FormClosing);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1_Poster))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: System::Void button_Save_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void textBox_Annotation_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void button1_Load_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void InsertForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
 };
 }

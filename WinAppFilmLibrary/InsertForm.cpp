@@ -20,3 +20,33 @@ System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ se
 
 	sr->save_Id();
 }
+
+System::Void WinAppFilmLibrary::InsertForm::button1_Load_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	OpenFileDialog^ ofd = gcnew OpenFileDialog();
+	//Отображение 
+	ofd->Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG|All files(*.*)|*.*";
+	if (pictureBox1_Poster->Image != nullptr)
+	{
+		delete pictureBox1_Poster->Image;
+		//delete img;
+	}
+	if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		try
+		{
+			Bitmap^ img = gcnew Bitmap(ofd->FileName);
+			pictureBox1_Poster->Image = img;
+			textBox_Poster->Text = ofd->FileName;
+		}
+		catch (System::Exception^)
+		{
+			MessageBox::Show("Невозможно открыть выбранный файл", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+	}
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::InsertForm::InsertForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e)
+{
+	return System::Void();
+}

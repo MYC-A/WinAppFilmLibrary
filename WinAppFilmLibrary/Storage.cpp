@@ -60,10 +60,81 @@ void Storage::load_Movie()
     return;
 }
 
-List<Movie^>^ Storage::find_Movie(String^ Title, DateTime Data, String^ Genre)
+List<Movie^>^ Storage::find_Movie(String^ Title, DateTime Data, double Rating_From, double Rating_to)
 {
-    throw gcnew System::NotImplementedException();
-    // TODO: вставьте здесь оператор return
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+        if ( (movieList[i]->Title == Title) && (movieList[i]->Data.ToShortDateString() == Data.ToShortDateString()) && (movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to) ) {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
+}
+
+List<Movie^>^ Storage::find_Movie(String^ Title, DateTime Data)
+{
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+        if ((movieList[i]->Title == Title) && (movieList[i]->Data.ToShortDateString() == Data.ToShortDateString()) ) {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
+}
+
+List<Movie^>^ Storage::find_Movie(String^ Title, double Rating_From, double Rating_to)
+{
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+        if ((movieList[i]->Title == Title) && (movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to)) {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
+}
+
+List<Movie^>^ Storage::find_Movie(DateTime Data, double Rating_From, double Rating_to)
+{
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+        if ((movieList[i]->Data.ToShortDateString() == Data.ToShortDateString()) && (movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to)) {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
+}
+
+List<Movie^>^ Storage::find_Movie(String^ Title)
+{
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+        if (movieList[i]->Title == Title) {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
+}
+
+List<Movie^>^ Storage::find_Movie(DateTime Data)
+{
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+        if (movieList[i]->Data.ToShortDateString() == Data.ToShortDateString()) {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
+}
+
+List<Movie^>^ Storage::find_Movie(double Rating_From, double Rating_to)
+{
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+        if ((movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to)) {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
 }
 
 Movie^ Storage::find_Movie_index(int index)

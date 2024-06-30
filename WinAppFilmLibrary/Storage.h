@@ -12,7 +12,21 @@ public:
 
 	void save_AllMovie(); //сохранение списка фильмов
 	void load_Movie(); //загрузка фильмов из файла 
-	List<Movie^>^ find_Movie(String^ Title, DateTime Data, String^ Genre);//Поиск фильма по названию, дате и жанру
+
+	List<Movie^>^ find_Movie(String^ Title, DateTime Data, double Rating_From, double Rating_to);//Поиск фильма по названию, дате и жанру
+	
+	List<Movie^>^ find_Movie(String^ Title, DateTime Data); //Перегрузка метода
+	
+	List<Movie^>^ find_Movie(String^ Title, double Rating_From, double Rating_to); //Перегрузка метода
+	
+	List<Movie^>^ find_Movie(DateTime Data, double Rating_From, double Rating_to); //Перегрузка метода
+	
+	List<Movie^>^ find_Movie(String^ Title); //Перегрузка метода
+
+	List<Movie^>^ find_Movie(DateTime Data); //Перегрузка метода
+
+	List<Movie^>^ find_Movie(double Rating_From, double Rating_to); //Перегрузка метода
+
 	Movie^ find_Movie_index(int index);//Поиск фильма по id
 	List<Movie^>^ find_UnRelease_Movie(); // Поиск не вышедших фильмов
 	Storage() {

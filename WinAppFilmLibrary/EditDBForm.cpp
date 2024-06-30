@@ -6,17 +6,17 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 {
 	listView->Items->Clear();
 	listView->DataBindings->Clear();
-	System::GC::Collect();//Сборка мусора
+	//System::GC::Collect();//Сборка мусора
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
-	imageList->ImageSize = System::Drawing::Size(100, 100);
+	imageList->ImageSize = System::Drawing::Size(150, 210);
 	int count = 0;//Добавить
 	
 	for each (Movie ^ movie in sr->movieList)
 	{
 		ListViewItem^ item = gcnew ListViewItem();
 		item->ImageIndex = count++;
-		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap("C:\\Movie_Library\\Image.jpg"));
+		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap(movie->Poster));
 
 		item->SubItems->Add(movie->Title);
 		item->SubItems->Add(movie->Data.ToString());
@@ -28,14 +28,20 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 	}
 	listView->SmallImageList = imageList;
 	listView->EndUpdate();
+	listView->DataBindings->Clear();
+	System::GC::Collect(); //Добавить
     return;
 }
 
 System::Void WinAppFilmLibrary::EditDBForm::button_Insert_Click(System::Object^ sender, System::EventArgs^ e)
 {
+	System::GC::Collect();
     InsertForm^ insertForm = gcnew InsertForm(this,sr);
     
     insertForm->ShowDialog();
+	delete insertForm;
+	insertForm = nullptr;
+	System::GC::Collect();
 
     return System::Void();
 }

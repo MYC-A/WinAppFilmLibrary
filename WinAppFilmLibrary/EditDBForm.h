@@ -191,7 +191,7 @@ namespace WinAppFilmLibrary {
 		}
 #pragma endregion
 	
-	private: System::Void button_Insert_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void button_Insert_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void listView_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 
 }

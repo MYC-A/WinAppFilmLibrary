@@ -29,6 +29,7 @@ namespace WinAppFilmLibrary {
 			//
 		}
 		void ShowItem();
+		void DisplayForm();
 
 	protected:
 		/// <summary>
@@ -68,6 +69,8 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::TextBox^ textBox1_Title;
 	private: System::Windows::Forms::TextBox^ textBox1_Release;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Button^ button1_LoadN;
+	private: System::Windows::Forms::TextBox^ textBox_Poster;
 
 
 
@@ -108,6 +111,8 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Title = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1_Release = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->button1_LoadN = (gcnew System::Windows::Forms::Button());
+			this->textBox_Poster = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -123,7 +128,7 @@ namespace WinAppFilmLibrary {
 			// textBox1
 			// 
 			this->textBox1->BackColor = System::Drawing::SystemColors::Control;
-			this->textBox1->Location = System::Drawing::Point(15, 353);
+			this->textBox1->Location = System::Drawing::Point(13, 400);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(569, 121);
@@ -132,7 +137,7 @@ namespace WinAppFilmLibrary {
 			// label1_Annotation
 			// 
 			this->label1_Annotation->AutoSize = true;
-			this->label1_Annotation->Location = System::Drawing::Point(12, 337);
+			this->label1_Annotation->Location = System::Drawing::Point(10, 384);
 			this->label1_Annotation->Name = L"label1_Annotation";
 			this->label1_Annotation->Size = System::Drawing::Size(61, 13);
 			this->label1_Annotation->TabIndex = 7;
@@ -150,6 +155,7 @@ namespace WinAppFilmLibrary {
 			// 
 			// button1_Save
 			// 
+			this->button1_Save->Enabled = false;
 			this->button1_Save->Location = System::Drawing::Point(618, 186);
 			this->button1_Save->Name = L"button1_Save";
 			this->button1_Save->Size = System::Drawing::Size(141, 42);
@@ -255,11 +261,32 @@ namespace WinAppFilmLibrary {
 			this->label1->Size = System::Drawing::Size(272, 311);
 			this->label1->TabIndex = 13;
 			// 
+			// button1_LoadN
+			// 
+			this->button1_LoadN->Location = System::Drawing::Point(63, 330);
+			this->button1_LoadN->Name = L"button1_LoadN";
+			this->button1_LoadN->Size = System::Drawing::Size(197, 31);
+			this->button1_LoadN->TabIndex = 14;
+			this->button1_LoadN->Text = L"Загрузить";
+			this->button1_LoadN->UseVisualStyleBackColor = true;
+			this->button1_LoadN->Visible = false;
+			this->button1_LoadN->Click += gcnew System::EventHandler(this, &CardForm::button1_LoadN_Click);
+			// 
+			// textBox_Poster
+			// 
+			this->textBox_Poster->Location = System::Drawing::Point(413, 298);
+			this->textBox_Poster->Name = L"textBox_Poster";
+			this->textBox_Poster->Size = System::Drawing::Size(136, 20);
+			this->textBox_Poster->TabIndex = 15;
+			this->textBox_Poster->Visible = false;
+			// 
 			// CardForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(771, 486);
+			this->ClientSize = System::Drawing::Size(771, 536);
+			this->Controls->Add(this->textBox_Poster);
+			this->Controls->Add(this->button1_LoadN);
 			this->Controls->Add(this->textBox1_Release);
 			this->Controls->Add(this->dateTimePicker1);
 			this->Controls->Add(this->label1_Release);
@@ -278,6 +305,7 @@ namespace WinAppFilmLibrary {
 			this->Controls->Add(this->label1);
 			this->Name = L"CardForm";
 			this->Text = L"CardForm";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &CardForm::CardForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &CardForm::CardForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
@@ -288,5 +316,7 @@ namespace WinAppFilmLibrary {
 	private: System::Void button1_Change_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void button1_Save_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void CardForm_Load(System::Object^ sender, System::EventArgs^ e);
+private: System::Void button1_LoadN_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void CardForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
 };
 }

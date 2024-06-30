@@ -7,16 +7,15 @@ using namespace System;
 ref class Movie
 {
 public:
-    property int Id;
-    property String^ Title;
-    property String^ Poster; 
-    property DateTime Data; 
-    property array<String^>^ Genre;
-    property double Rating;
-    property String^ Annotation;
+    property int Id; // Уникальный идентификатор фильма
+    property String^ Title; // Название фильма
+    property String^ Poster; // Ссылка на постер в локальной базе данных
+    property DateTime Data; // Выход в прокат
+    property array<String^>^ Genre; // Жанр фильма
+    property double Rating;// Рейтинг фильма
+    property String^ Annotation;// Аннотация к фильму
     property bool Release; 
-    static List<Movie^>^ movieList = gcnew List<Movie^>();
-    static int Current_Id;
+   
 
 
     Movie(int Id, String^ Poster, String^ Title, DateTime Data, array<String^>^ Genre, double Rating, String^ Annotation);

@@ -93,6 +93,7 @@ namespace WinAppFilmLibrary {
 			this->button_Search->TabIndex = 2;
 			this->button_Search->Text = L"Поиск";
 			this->button_Search->UseVisualStyleBackColor = true;
+			this->button_Search->Click += gcnew System::EventHandler(this, &MenuForm1::button_Search_Click);
 			// 
 			// MenuForm1
 			// 
@@ -110,5 +111,6 @@ namespace WinAppFilmLibrary {
 #pragma endregion
 	private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button_Editing_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void button_Search_Click(System::Object^ sender, System::EventArgs^ e);
 	};
 };
