@@ -23,6 +23,7 @@ System::Void WinAppFilmLibrary::MenuForm1::button1_Close_Click(System::Object^ s
 System::Void WinAppFilmLibrary::MenuForm1::button_Editing_Click(System::Object^ sender, System::EventArgs^ e)
 {
     EditDBForm^ iftr = gcnew EditDBForm(sr);
+    iftr->StartPosition = this->StartPosition;
     iftr->ShowDialog();
     delete iftr;
     iftr = nullptr;

@@ -71,6 +71,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Change_Click(System::Object^ s
 
 System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sender, System::EventArgs^ e)
 {
+	System::GC::Collect();
 	bool flag = true;
 	for each (Control ^ control in this->Controls)
 	{
@@ -90,13 +91,22 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 			}
 		}
 	}
+	
 	if (flag == true) {
 		String^ tmp_Poster = this->textBox_Poster->Text;
 		String^ tmp_Title = this->textBox1_Title->Text;
 		String^ tmp_Annotation = textBox1->Text;
 		DateTime tmp_Data = this->dateTimePicker1->Value;
 		array<String^>^ tmp_Genre = this->textBox1_Genre->Text->Split(',');
-		double tmp_Rating = Convert::ToDouble(this->textBox1_Rating->Text);
+		double tmp_Rating;
+		try {
+			double tmp_Rating = Convert::ToDouble(this->textBox1_Rating->Text);
+		}
+		catch (System::Exception^) {
+			MessageBox::Show("Некоректный ввод", "Ошбка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			ShowItem();
+			return System::Void();
+		}
 		
 		SuitableMovie->Poster = tmp_Poster;
 		SuitableMovie->Title = tmp_Title;
@@ -105,7 +115,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		SuitableMovie->Genre = tmp_Genre;
 		SuitableMovie->Rating = tmp_Rating;
 		parent->UpdateListView();
-
+		System::GC::Collect();
 	}
 	else {
 		MessageBox::Show("Карточка заполнена неполностью", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -114,11 +124,13 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 	this->button1_Change->Enabled = true;
 
 	ShowItem();
+	System::GC::Collect();
 	return System::Void();
 }
 
 System::Void WinAppFilmLibrary::CardForm::CardForm_Load(System::Object^ sender, System::EventArgs^ e)
 {
+	System::GC::Collect();
 	parent = dynamic_cast<EditDBForm^>(this->Owner);// Методы первой формы
 	return System::Void();
 }
@@ -127,7 +139,6 @@ System::Void WinAppFilmLibrary::CardForm::button1_LoadN_Click(System::Object^ se
 {
 	OpenFileDialog^ ofd = gcnew OpenFileDialog();
 	//Отображение 
-	Bitmap^ img;
 	ofd->Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG|All files(*.*)|*.*";
 	if (pictureBox1->Image != nullptr)
 	{
@@ -147,7 +158,6 @@ System::Void WinAppFilmLibrary::CardForm::button1_LoadN_Click(System::Object^ se
 		}
 	}
 	return System::Void();
-	return System::Void();
 }
 
 System::Void WinAppFilmLibrary::CardForm::CardForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e)
@@ -156,6 +166,8 @@ System::Void WinAppFilmLibrary::CardForm::CardForm_FormClosing(System::Object^ s
 	{
 		delete pictureBox1->Image;
 		delete pictureBox1;
+		delete img;
 	}
+	System::GC::Collect();
 	return System::Void();
 }

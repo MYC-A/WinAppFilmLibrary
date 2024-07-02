@@ -16,9 +16,9 @@ System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ se
 
 	sr->save_Movie(newMovie);
 	editForm->UpdateListView();
-
-
+	delete newMovie; //
 	sr->save_Id();
+	delete pictureBox1_Poster->Image;
 }
 
 System::Void WinAppFilmLibrary::InsertForm::button1_Load_Click(System::Object^ sender, System::EventArgs^ e)
@@ -29,12 +29,13 @@ System::Void WinAppFilmLibrary::InsertForm::button1_Load_Click(System::Object^ s
 	if (pictureBox1_Poster->Image != nullptr)
 	{
 		delete pictureBox1_Poster->Image;
-		//delete img;
+		delete img;
+		img = nullptr;
 	}
 	if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 		try
 		{
-			Bitmap^ img = gcnew Bitmap(ofd->FileName);
+			img = gcnew Bitmap(ofd->FileName);
 			pictureBox1_Poster->Image = img;
 			textBox_Poster->Text = ofd->FileName;
 		}
@@ -43,10 +44,24 @@ System::Void WinAppFilmLibrary::InsertForm::button1_Load_Click(System::Object^ s
 			MessageBox::Show("Невозможно открыть выбранный файл", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
+	System::GC::Collect();
 	return System::Void();
 }
 
 System::Void WinAppFilmLibrary::InsertForm::InsertForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e)
 {
+	if (pictureBox1_Poster->Image != nullptr)
+	{
+		delete pictureBox1_Poster->Image;
+		delete img;
+		img = nullptr;
+	}
+	System::GC::Collect();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::InsertForm::InsertForm_Load(System::Object^ sender, System::EventArgs^ e)
+{
+	System::GC::Collect();
 	return System::Void();
 }

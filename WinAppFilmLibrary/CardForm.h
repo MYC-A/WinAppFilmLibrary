@@ -47,6 +47,7 @@ namespace WinAppFilmLibrary {
 		   Movie^ SuitableMovie = gcnew Movie();
 		   Storage^ sr;
 		   EditDBForm^ parent;
+		   Bitmap^ img;
 	protected:
 
 
@@ -71,6 +72,9 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ button1_LoadN;
 	private: System::Windows::Forms::TextBox^ textBox_Poster;
+	private: System::Windows::Forms::Button^ button_Cancel;
+	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
+	private: System::ComponentModel::IContainer^ components;
 
 
 
@@ -86,7 +90,7 @@ namespace WinAppFilmLibrary {
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -95,6 +99,7 @@ namespace WinAppFilmLibrary {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label1_Annotation = (gcnew System::Windows::Forms::Label());
@@ -113,6 +118,8 @@ namespace WinAppFilmLibrary {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button1_LoadN = (gcnew System::Windows::Forms::Button());
 			this->textBox_Poster = (gcnew System::Windows::Forms::TextBox());
+			this->button_Cancel = (gcnew System::Windows::Forms::Button());
+			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -124,28 +131,35 @@ namespace WinAppFilmLibrary {
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &CardForm::pictureBox1_Click);
 			// 
 			// textBox1
 			// 
-			this->textBox1->BackColor = System::Drawing::SystemColors::Control;
-			this->textBox1->Location = System::Drawing::Point(13, 400);
+			this->textBox1->BackColor = System::Drawing::Color::Snow;
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBox1->Location = System::Drawing::Point(16, 403);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(569, 121);
+			this->textBox1->Size = System::Drawing::Size(568, 121);
 			this->textBox1->TabIndex = 6;
 			// 
 			// label1_Annotation
 			// 
 			this->label1_Annotation->AutoSize = true;
-			this->label1_Annotation->Location = System::Drawing::Point(10, 384);
+			this->label1_Annotation->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1_Annotation->Location = System::Drawing::Point(12, 378);
 			this->label1_Annotation->Name = L"label1_Annotation";
-			this->label1_Annotation->Size = System::Drawing::Size(61, 13);
+			this->label1_Annotation->Size = System::Drawing::Size(85, 19);
 			this->label1_Annotation->TabIndex = 7;
 			this->label1_Annotation->Text = L"Аннотация";
 			// 
 			// button1_Change
 			// 
-			this->button1_Change->Location = System::Drawing::Point(618, 74);
+			this->button1_Change->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1_Change->Location = System::Drawing::Point(618, 77);
 			this->button1_Change->Name = L"button1_Change";
 			this->button1_Change->Size = System::Drawing::Size(141, 42);
 			this->button1_Change->TabIndex = 9;
@@ -156,7 +170,9 @@ namespace WinAppFilmLibrary {
 			// button1_Save
 			// 
 			this->button1_Save->Enabled = false;
-			this->button1_Save->Location = System::Drawing::Point(618, 186);
+			this->button1_Save->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1_Save->Location = System::Drawing::Point(618, 174);
 			this->button1_Save->Name = L"button1_Save";
 			this->button1_Save->Size = System::Drawing::Size(141, 42);
 			this->button1_Save->TabIndex = 10;
@@ -167,88 +183,108 @@ namespace WinAppFilmLibrary {
 			// label1_Genre
 			// 
 			this->label1_Genre->AutoSize = true;
-			this->label1_Genre->Location = System::Drawing::Point(328, 205);
+			this->label1_Genre->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1_Genre->Location = System::Drawing::Point(317, 197);
 			this->label1_Genre->Name = L"label1_Genre";
-			this->label1_Genre->Size = System::Drawing::Size(36, 13);
+			this->label1_Genre->Size = System::Drawing::Size(47, 19);
 			this->label1_Genre->TabIndex = 4;
 			this->label1_Genre->Text = L"Жанр";
 			// 
 			// label1_Release
 			// 
 			this->label1_Release->AutoSize = true;
-			this->label1_Release->Location = System::Drawing::Point(326, 267);
+			this->label1_Release->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1_Release->Location = System::Drawing::Point(315, 258);
 			this->label1_Release->Name = L"label1_Release";
-			this->label1_Release->Size = System::Drawing::Size(38, 13);
+			this->label1_Release->Size = System::Drawing::Size(48, 19);
 			this->label1_Release->TabIndex = 5;
 			this->label1_Release->Text = L"Релиз";
 			// 
 			// label1_Data
 			// 
 			this->label1_Data->AutoSize = true;
-			this->label1_Data->Location = System::Drawing::Point(326, 136);
+			this->label1_Data->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1_Data->Location = System::Drawing::Point(317, 130);
 			this->label1_Data->Name = L"label1_Data";
-			this->label1_Data->Size = System::Drawing::Size(73, 13);
+			this->label1_Data->Size = System::Drawing::Size(93, 19);
 			this->label1_Data->TabIndex = 3;
 			this->label1_Data->Text = L"Дата выхода";
 			// 
 			// label1_Rating
 			// 
 			this->label1_Rating->AutoSize = true;
-			this->label1_Rating->Location = System::Drawing::Point(328, 74);
+			this->label1_Rating->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1_Rating->Location = System::Drawing::Point(317, 72);
 			this->label1_Rating->Name = L"label1_Rating";
-			this->label1_Rating->Size = System::Drawing::Size(48, 13);
+			this->label1_Rating->Size = System::Drawing::Size(65, 19);
 			this->label1_Rating->TabIndex = 2;
 			this->label1_Rating->Text = L"Рейтинг";
 			// 
 			// label1_Title
 			// 
 			this->label1_Title->AutoSize = true;
-			this->label1_Title->Location = System::Drawing::Point(330, 24);
+			this->label1_Title->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1_Title->Location = System::Drawing::Point(317, 24);
 			this->label1_Title->Name = L"label1_Title";
-			this->label1_Title->Size = System::Drawing::Size(57, 13);
+			this->label1_Title->Size = System::Drawing::Size(73, 19);
 			this->label1_Title->TabIndex = 1;
 			this->label1_Title->Text = L"Название";
 			// 
 			// textBox1_Rating
 			// 
 			this->textBox1_Rating->BackColor = System::Drawing::Color::Snow;
+			this->textBox1_Rating->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox1_Rating->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
 			this->textBox1_Rating->Location = System::Drawing::Point(413, 71);
 			this->textBox1_Rating->Name = L"textBox1_Rating";
-			this->textBox1_Rating->Size = System::Drawing::Size(136, 20);
+			this->textBox1_Rating->Size = System::Drawing::Size(136, 25);
 			this->textBox1_Rating->TabIndex = 7;
 			// 
 			// textBox1_Genre
 			// 
 			this->textBox1_Genre->BackColor = System::Drawing::Color::Snow;
+			this->textBox1_Genre->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox1_Genre->Location = System::Drawing::Point(413, 198);
 			this->textBox1_Genre->Name = L"textBox1_Genre";
-			this->textBox1_Genre->Size = System::Drawing::Size(136, 20);
+			this->textBox1_Genre->Size = System::Drawing::Size(136, 25);
 			this->textBox1_Genre->TabIndex = 9;
 			// 
 			// dateTimePicker1
 			// 
+			this->dateTimePicker1->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->dateTimePicker1->Location = System::Drawing::Point(413, 130);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(136, 20);
+			this->dateTimePicker1->Size = System::Drawing::Size(136, 25);
 			this->dateTimePicker1->TabIndex = 11;
 			// 
 			// textBox1_Title
 			// 
 			this->textBox1_Title->BackColor = System::Drawing::Color::Snow;
+			this->textBox1_Title->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox1_Title->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
 			this->textBox1_Title->Location = System::Drawing::Point(413, 21);
 			this->textBox1_Title->Name = L"textBox1_Title";
-			this->textBox1_Title->Size = System::Drawing::Size(136, 20);
+			this->textBox1_Title->Size = System::Drawing::Size(136, 25);
 			this->textBox1_Title->TabIndex = 12;
 			// 
 			// textBox1_Release
 			// 
 			this->textBox1_Release->BackColor = System::Drawing::Color::Snow;
+			this->textBox1_Release->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox1_Release->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
-			this->textBox1_Release->Location = System::Drawing::Point(413, 260);
+			this->textBox1_Release->Location = System::Drawing::Point(413, 258);
 			this->textBox1_Release->Name = L"textBox1_Release";
-			this->textBox1_Release->Size = System::Drawing::Size(136, 20);
+			this->textBox1_Release->Size = System::Drawing::Size(136, 25);
 			this->textBox1_Release->TabIndex = 10;
 			// 
 			// label1
@@ -260,9 +296,12 @@ namespace WinAppFilmLibrary {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(272, 311);
 			this->label1->TabIndex = 13;
+			this->label1->Click += gcnew System::EventHandler(this, &CardForm::label1_Click);
 			// 
 			// button1_LoadN
 			// 
+			this->button1_LoadN->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->button1_LoadN->Location = System::Drawing::Point(63, 330);
 			this->button1_LoadN->Name = L"button1_LoadN";
 			this->button1_LoadN->Size = System::Drawing::Size(197, 31);
@@ -274,17 +313,35 @@ namespace WinAppFilmLibrary {
 			// 
 			// textBox_Poster
 			// 
-			this->textBox_Poster->Location = System::Drawing::Point(413, 298);
+			this->textBox_Poster->Location = System::Drawing::Point(413, 294);
 			this->textBox_Poster->Name = L"textBox_Poster";
 			this->textBox_Poster->Size = System::Drawing::Size(136, 20);
 			this->textBox_Poster->TabIndex = 15;
 			this->textBox_Poster->Visible = false;
+			// 
+			// button_Cancel
+			// 
+			this->button_Cancel->Enabled = false;
+			this->button_Cancel->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button_Cancel->Location = System::Drawing::Point(618, 258);
+			this->button_Cancel->Name = L"button_Cancel";
+			this->button_Cancel->Size = System::Drawing::Size(141, 42);
+			this->button_Cancel->TabIndex = 16;
+			this->button_Cancel->Text = L"Отменить";
+			this->button_Cancel->UseVisualStyleBackColor = true;
+			// 
+			// contextMenuStrip1
+			// 
+			this->contextMenuStrip1->Name = L"contextMenuStrip1";
+			this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
 			// 
 			// CardForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(771, 536);
+			this->Controls->Add(this->button_Cancel);
 			this->Controls->Add(this->textBox_Poster);
 			this->Controls->Add(this->button1_LoadN);
 			this->Controls->Add(this->textBox1_Release);
@@ -318,5 +375,9 @@ private: System::Void button1_Save_Click(System::Object^ sender, System::EventAr
 private: System::Void CardForm_Load(System::Object^ sender, System::EventArgs^ e);
 private: System::Void button1_LoadN_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void CardForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
+private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }

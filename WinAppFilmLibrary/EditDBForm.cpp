@@ -4,33 +4,50 @@
 
 void WinAppFilmLibrary::EditDBForm::UpdateListView()
 {
+	int count_items = listView->Items->Count;
+	while (listView->Items->Count != 0) {
+		listView->Items->RemoveAt(0);
+	}
+	System::GC::Collect();
 	listView->Items->Clear();
 	listView->DataBindings->Clear();
-	//System::GC::Collect();//Сборка мусора
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
 	imageList->ImageSize = System::Drawing::Size(150, 210);
 	int count = 0;//Добавить
-	
+	System::GC::Collect();//Сборка мусора
+
 	for each (Movie ^ movie in sr->movieList)
-	{
+	{   //Bitmap
 		ListViewItem^ item = gcnew ListViewItem();
-		item->ImageIndex = count++;
+
+		//item->ImageIndex = count++; //
+
+		item->ImageKey = movie->Id.ToString(); //
+
+
 		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap(movie->Poster));
 
 		item->SubItems->Add(movie->Title);
-		item->SubItems->Add(movie->Data.ToString());
+		item->SubItems->Add(movie->Data.ToShortDateString());
 		item->SubItems->Add(String::Join(", ", movie->Genre));
 		item->SubItems->Add(movie->Rating.ToString());
 		item->SubItems->Add(movie->Annotation);
 		item->SubItems->Add(movie->Id.ToString());
 		listView->Items->Add(item);
+		delete item;
 	}
 	listView->SmallImageList = imageList;
 	listView->EndUpdate();
-	listView->DataBindings->Clear();
+	//listView->DataBindings->Clear();
 	System::GC::Collect(); //Добавить
-    return;
+	return;
+}
+
+void WinAppFilmLibrary::EditDBForm::GB()
+{
+	System::GC::Collect();
+	return;
 }
 
 System::Void WinAppFilmLibrary::EditDBForm::button_Insert_Click(System::Object^ sender, System::EventArgs^ e)
@@ -41,6 +58,7 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Insert_Click(System::Object^ 
     insertForm->ShowDialog();
 	delete insertForm;
 	insertForm = nullptr;
+	UpdateListView();
 	System::GC::Collect();
 
     return System::Void();
@@ -73,11 +91,12 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Delete_Click(System::Object^ 
 			}
 		}
 		UpdateListView();
+		System::GC::Collect();//
 	}
 	catch(System::Exception^){
 		MessageBox::Show("Выберите фильм", "Предупреждение", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
-	
+	System::GC::Collect();
 	return System::Void();
 }
 
@@ -97,6 +116,12 @@ System::Void WinAppFilmLibrary::EditDBForm::button1_Duplicate_Click(System::Obje
 		}
 	}
 	UpdateListView();
+	System::GC::Collect();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::EditDBForm::EditDBForm_Load(System::Object^ sender, System::EventArgs^ e)
+{
 	System::GC::Collect();
 	return System::Void();
 }

@@ -14,7 +14,7 @@ void WinAppFilmLibrary::SearcForm::UpdateListView()
 	{
 		ListViewItem^ item = gcnew ListViewItem();
 		item->ImageIndex = count++;
-		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap("C:\\Movie_Library\\Image.jpg"));
+		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap(movie->Poster));
 
 		item->SubItems->Add(movie->Title);
 		item->SubItems->Add(movie->Data.ToString());
@@ -130,4 +130,10 @@ System::Void WinAppFilmLibrary::SearcForm::dateTimePicker1_ValueChanged(System::
 	}
 	
 	
+}
+
+System::Void WinAppFilmLibrary::SearcForm::SearcForm_Load(System::Object^ sender, System::EventArgs^ e)
+{
+	System::GC::Collect();
+	return System::Void();
 }

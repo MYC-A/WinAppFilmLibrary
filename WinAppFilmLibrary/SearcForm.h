@@ -96,16 +96,20 @@ namespace WinAppFilmLibrary {
 			// 
 			// listView
 			// 
+			this->listView->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->listView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(5) {
 				this->Poster, this->Title,
 					this->Data, this->Genre, this->Rating
 			});
+			this->listView->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->listView->FullRowSelect = true;
 			this->listView->GridLines = true;
 			this->listView->HideSelection = false;
-			this->listView->Location = System::Drawing::Point(12, 153);
+			this->listView->Location = System::Drawing::Point(1, 160);
 			this->listView->Name = L"listView";
-			this->listView->Size = System::Drawing::Size(725, 507);
+			this->listView->Size = System::Drawing::Size(1100, 573);
 			this->listView->TabIndex = 1;
 			this->listView->UseCompatibleStateImageBehavior = false;
 			this->listView->View = System::Windows::Forms::View::Details;
@@ -137,7 +141,7 @@ namespace WinAppFilmLibrary {
 			// 
 			// textBox1_Search
 			// 
-			this->textBox1_Search->Location = System::Drawing::Point(87, 12);
+			this->textBox1_Search->Location = System::Drawing::Point(125, 15);
 			this->textBox1_Search->Multiline = true;
 			this->textBox1_Search->Name = L"textBox1_Search";
 			this->textBox1_Search->Size = System::Drawing::Size(406, 31);
@@ -145,7 +149,9 @@ namespace WinAppFilmLibrary {
 			// 
 			// button1_Search
 			// 
-			this->button1_Search->Location = System::Drawing::Point(543, 12);
+			this->button1_Search->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1_Search->Location = System::Drawing::Point(590, 12);
 			this->button1_Search->Name = L"button1_Search";
 			this->button1_Search->Size = System::Drawing::Size(152, 47);
 			this->button1_Search->TabIndex = 3;
@@ -155,14 +161,14 @@ namespace WinAppFilmLibrary {
 			// 
 			// textBox_RatingFrom
 			// 
-			this->textBox_RatingFrom->Location = System::Drawing::Point(81, 109);
+			this->textBox_RatingFrom->Location = System::Drawing::Point(125, 110);
 			this->textBox_RatingFrom->Name = L"textBox_RatingFrom";
 			this->textBox_RatingFrom->Size = System::Drawing::Size(100, 20);
 			this->textBox_RatingFrom->TabIndex = 4;
 			// 
 			// textBox_Ratingto
 			// 
-			this->textBox_Ratingto->Location = System::Drawing::Point(212, 109);
+			this->textBox_Ratingto->Location = System::Drawing::Point(272, 110);
 			this->textBox_Ratingto->Name = L"textBox_Ratingto";
 			this->textBox_Ratingto->Size = System::Drawing::Size(100, 20);
 			this->textBox_Ratingto->TabIndex = 5;
@@ -172,46 +178,54 @@ namespace WinAppFilmLibrary {
 			this->dateTimePicker1->Checked = false;
 			this->dateTimePicker1->CustomFormat = L"\'";
 			this->dateTimePicker1->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
-			this->dateTimePicker1->Location = System::Drawing::Point(87, 59);
+			this->dateTimePicker1->Location = System::Drawing::Point(125, 63);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
 			this->dateTimePicker1->ShowCheckBox = true;
-			this->dateTimePicker1->Size = System::Drawing::Size(225, 20);
+			this->dateTimePicker1->Size = System::Drawing::Size(247, 20);
 			this->dateTimePicker1->TabIndex = 6;
 			this->dateTimePicker1->ValueChanged += gcnew System::EventHandler(this, &SearcForm::dateTimePicker1_ValueChanged);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(9, 21);
+			this->label1->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1->Location = System::Drawing::Point(11, 15);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(35, 13);
+			this->label1->Size = System::Drawing::Size(93, 23);
 			this->label1->TabIndex = 7;
-			this->label1->Text = L"label1";
+			this->label1->Text = L"Название";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(9, 66);
+			this->label2->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label2->Location = System::Drawing::Point(11, 60);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(35, 13);
+			this->label2->Size = System::Drawing::Size(50, 23);
 			this->label2->TabIndex = 8;
-			this->label2->Text = L"label2";
+			this->label2->Text = L"Дата";
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(9, 112);
+			this->label3->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label3->Location = System::Drawing::Point(11, 106);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(35, 13);
+			this->label3->Size = System::Drawing::Size(81, 23);
 			this->label3->TabIndex = 9;
-			this->label3->Text = L"label3";
+			this->label3->Text = L"Рейтинг";
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(187, 112);
+			this->label4->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label4->Location = System::Drawing::Point(236, 107);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(19, 13);
+			this->label4->Size = System::Drawing::Size(30, 23);
 			this->label4->TabIndex = 10;
 			this->label4->Text = L"до";
 			// 
@@ -219,7 +233,7 @@ namespace WinAppFilmLibrary {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(766, 672);
+			this->ClientSize = System::Drawing::Size(1094, 726);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
@@ -233,6 +247,7 @@ namespace WinAppFilmLibrary {
 			this->Name = L"SearcForm";
 			this->Text = L"SearcForm";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &SearcForm::SearcForm_FormClosing);
+			this->Load += gcnew System::EventHandler(this, &SearcForm::SearcForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -243,5 +258,6 @@ namespace WinAppFilmLibrary {
 private: System::Void button1_Search_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void SearcForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
 private: System::Void dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e);
+private: System::Void SearcForm_Load(System::Object^ sender, System::EventArgs^ e);
 };
 }

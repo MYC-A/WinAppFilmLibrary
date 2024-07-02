@@ -1,5 +1,6 @@
 #include "MyForm.h"
 #include "MenuForm1.h"
+#include "HelpForm.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -14,11 +15,19 @@ int main(array<String^>^ args) {
 
 System::Void WinAppFilmLibrary::MyForm::button1_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	MessageBox::Show("Форма закрывается", "Закрытие", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	MenuForm1^ iftr = gcnew MenuForm1();
 	iftr->Left = this->Left;
 	iftr->Top = this->Top;
 	iftr->Show();
 	this->Hide();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::MyForm::button_rules_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	HelpForm^ iftr = gcnew HelpForm();
+	iftr->Left = this->Left;
+	iftr->Top = this->Top;
+	iftr->ShowDialog();
 	return System::Void();
 }

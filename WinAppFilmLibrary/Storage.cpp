@@ -40,9 +40,9 @@ void Storage::load_Movie()
 
     while ((line = sr->ReadLine()) != nullptr) {
         Movie^ movie = gcnew Movie();
-        //if (line == "") {
-        //	break;
-        //}
+        if (line == "") {
+        	break;
+        }
         array<String^>^ data = line->Split('|');
         movie->Id = Convert::ToInt32(data[0]);
         movie->Poster = data[1];
