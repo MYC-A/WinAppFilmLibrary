@@ -32,6 +32,7 @@
     <ClCompile Include="InsertForm.cpp" />
     <ClCompile Include="MenuForm1.cpp" />
     <ClCompile Include="Movie.cpp" />
+    <ClCompile Include="Movies.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="SearcForm.cpp" />
     <ClCompile Include="Storage.cpp" />
@@ -53,6 +54,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="Movies.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

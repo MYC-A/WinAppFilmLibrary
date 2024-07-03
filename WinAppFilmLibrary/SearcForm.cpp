@@ -66,20 +66,20 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 			{
 				if (Rating_flag)
 				{
-					list_view_movie = sr->find_Movie(textBox1_Search->Text, dateTimePicker1->Value, tmp_RatingFrom, tmp_Ratingto);
+					list_view_movie = movies->find_Movie(textBox1_Search->Text, dateTimePicker1->Value, tmp_RatingFrom, tmp_Ratingto);
 				}
 				else
 				{
-					list_view_movie = sr->find_Movie(textBox1_Search->Text, dateTimePicker1->Value);
+					list_view_movie = movies->find_Movie(textBox1_Search->Text, dateTimePicker1->Value);
 				}
 			}
 			else if (Rating_flag)
 			{
-				list_view_movie = sr->find_Movie(textBox1_Search->Text, tmp_RatingFrom, tmp_Ratingto);
+				list_view_movie = movies->find_Movie(textBox1_Search->Text, tmp_RatingFrom, tmp_Ratingto);
 			}
 			else
 			{
-				list_view_movie = sr->find_Movie(textBox1_Search->Text);
+				list_view_movie = movies->find_Movie(textBox1_Search->Text);
 			}
 			UpdateListView();
 		}
@@ -88,15 +88,15 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 		{
 			if (Rating_flag)
 			{
-				list_view_movie = sr->find_Movie(dateTimePicker1->Value, tmp_RatingFrom, tmp_Ratingto);
+				list_view_movie = movies->find_Movie(dateTimePicker1->Value, tmp_RatingFrom, tmp_Ratingto);
 			}
 			else {
-				list_view_movie = sr->find_Movie(dateTimePicker1->Value);
+				list_view_movie = movies->find_Movie(dateTimePicker1->Value);
 			}
 			UpdateListView();
 		}
 		else if(Rating_flag){
-				list_view_movie = sr->find_Movie(tmp_RatingFrom, tmp_Ratingto);		
+				list_view_movie = movies->find_Movie(tmp_RatingFrom, tmp_Ratingto);
 		}
 		//textBox1_Search->Clear();
 

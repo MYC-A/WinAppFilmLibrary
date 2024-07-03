@@ -6,7 +6,7 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 	{
 		delete pictureBox1->Image;
 	}
-	this->SuitableMovie = this->sr->find_Movie_index(this->index);
+	this->SuitableMovie = this->movies->find_Movie_index(this->index);
 
 	this->textBox_Poster->Text = SuitableMovie->Poster;
 	this->button1_LoadN->Visible = false;
@@ -71,7 +71,6 @@ System::Void WinAppFilmLibrary::CardForm::button1_Change_Click(System::Object^ s
 
 System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	System::GC::Collect();
 	bool flag = true;
 	for each (Control ^ control in this->Controls)
 	{
@@ -93,6 +92,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 	}
 	
 	if (flag == true) {
+		count++;
 		String^ tmp_Poster = this->textBox_Poster->Text;
 		String^ tmp_Title = this->textBox1_Title->Text;
 		String^ tmp_Annotation = textBox1->Text;
@@ -100,7 +100,8 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		array<String^>^ tmp_Genre = this->textBox1_Genre->Text->Split(',');
 		double tmp_Rating;
 		try {
-			double tmp_Rating = Convert::ToDouble(this->textBox1_Rating->Text);
+			double tmp_Rating1 = Convert::ToDouble(this->textBox1_Rating->Text);
+			tmp_Rating = tmp_Rating1;
 		}
 		catch (System::Exception^) {
 			MessageBox::Show("Некоректный ввод", "Ошбка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -114,8 +115,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		SuitableMovie->Data = tmp_Data;
 		SuitableMovie->Genre = tmp_Genre;
 		SuitableMovie->Rating = tmp_Rating;
-		parent->UpdateListView();
-		System::GC::Collect();
+		parent->EditForDisplays(SuitableMovie->Id.ToString(), index, count);
 	}
 	else {
 		MessageBox::Show("Карточка заполнена неполностью", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -124,7 +124,6 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 	this->button1_Change->Enabled = true;
 
 	ShowItem();
-	System::GC::Collect();
 	return System::Void();
 }
 

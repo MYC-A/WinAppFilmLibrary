@@ -16,10 +16,10 @@ namespace WinAppFilmLibrary {
 	public ref class EditDBForm : public System::Windows::Forms::Form
 	{
 	public:
-		EditDBForm(Storage^ sr)
+		EditDBForm(Movies^ movies)
 		{
+			this->movies = movies; //
 			InitializeComponent();
-			this -> sr = sr;
 			UpdateListView();
 			//
 			//TODO: добавьте код конструктора
@@ -27,6 +27,9 @@ namespace WinAppFilmLibrary {
 		}
 		void UpdateListView();
 		void GB();
+
+		void AddForDisplays(int Num_additions);
+		void EditForDisplays(String^ Name, int index,int Num_additions);
 
 	protected:
 		/// <summary>
@@ -39,7 +42,7 @@ namespace WinAppFilmLibrary {
 				delete components;
 			}
 		}
-	public: Storage^ sr;
+	public: Movies^ movies;
 	private: System::Windows::Forms::ListView^ listView;
 	protected:
 

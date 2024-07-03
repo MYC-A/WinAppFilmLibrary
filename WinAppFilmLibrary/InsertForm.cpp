@@ -2,7 +2,11 @@
 
 System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	int tmp_index = sr->Current_Id++;
+
+	int tmp_index = movies->getCurrent_Id();
+	movies->SetCurrent_Id(tmp_index + 1);
+
+	count++;
 	String^ tmp_Poster = textBox_Poster->Text;
 	String^ tmp_Title = textBox_Title->Text;
 	String^ tmp_Annotation = textBox_Annotation->Text;
@@ -11,13 +15,15 @@ System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ se
 	double tmp_Rating = Convert::ToDouble(textBox_Rating->Text);
 
 	Movie^ newMovie = gcnew Movie(tmp_index, tmp_Poster, tmp_Title, tmp_Data, tmp_Genre, tmp_Rating, tmp_Annotation);
-	sr->movieList->Add(newMovie);
+	movies->addMovie(newMovie);
 
 
-	sr->save_Movie(newMovie);
-	editForm->UpdateListView();
+	Storage::save_Movie(newMovie);
+	Storage::save_Id(movies->getCurrent_Id());
+
+	parent->AddForDisplays(count);
+
 	delete newMovie; //
-	sr->save_Id();
 	delete pictureBox1_Poster->Image;
 }
 
@@ -62,6 +68,7 @@ System::Void WinAppFilmLibrary::InsertForm::InsertForm_FormClosing(System::Objec
 
 System::Void WinAppFilmLibrary::InsertForm::InsertForm_Load(System::Object^ sender, System::EventArgs^ e)
 {
+	parent = dynamic_cast<EditDBForm^>(this->Owner);
 	System::GC::Collect();
 	return System::Void();
 }

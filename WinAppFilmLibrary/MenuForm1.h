@@ -1,5 +1,6 @@
 #pragma once
 #include "Storage.h"
+#include "Movies.h"
 
 namespace WinAppFilmLibrary {
 
@@ -34,7 +35,7 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::PictureBox^ pictureBox1_Background;
 
 	public:
-		Storage^ sr = gcnew Storage();
+		Movies^ movies = gcnew Movies();
 
 	protected:
 		/// <summary>

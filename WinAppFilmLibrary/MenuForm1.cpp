@@ -5,8 +5,8 @@
 
 void WinAppFilmLibrary::MenuForm1::InitializeBDFilms()
 {
-    this->sr->load_Movie();
-    this->sr->load_Id();
+    Storage::load_Movie(movies);
+    Storage::load_Id(movies);
     
 
 
@@ -15,14 +15,14 @@ void WinAppFilmLibrary::MenuForm1::InitializeBDFilms()
 
 System::Void WinAppFilmLibrary::MenuForm1::button1_Close_Click(System::Object^ sender, System::EventArgs^ e)
 {
-    int count = sr->Current_Id;
+    int count = movies->getCurrent_Id();
     MessageBox::Show(count.ToString(), "Закрытие", MessageBoxButtons::OK, MessageBoxIcon::Warning);
     return System::Void();
 }
 
 System::Void WinAppFilmLibrary::MenuForm1::button_Editing_Click(System::Object^ sender, System::EventArgs^ e)
 {
-    EditDBForm^ iftr = gcnew EditDBForm(sr);
+    EditDBForm^ iftr = gcnew EditDBForm(movies);
     iftr->StartPosition = this->StartPosition;
     iftr->ShowDialog();
     delete iftr;
@@ -33,7 +33,7 @@ System::Void WinAppFilmLibrary::MenuForm1::button_Editing_Click(System::Object^ 
 
 System::Void WinAppFilmLibrary::MenuForm1::button_Search_Click(System::Object^ sender, System::EventArgs^ e)
 {
-    SearcForm^ iftr = gcnew SearcForm(sr);
+    SearcForm^ iftr = gcnew SearcForm(movies);
     iftr->ShowDialog();
     delete iftr;
     iftr = nullptr;

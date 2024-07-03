@@ -17,11 +17,11 @@ namespace WinAppFilmLibrary {
 	public ref class SearcForm : public System::Windows::Forms::Form
 	{
 	public:
-		SearcForm(Storage^ sr)
+		SearcForm(Movies^ movies)
 		{
 			InitializeComponent();
-			this->sr = sr;
-			this->list_view_movie = sr->movieList;
+			this->movies = movies;
+			this->list_view_movie = movies->getmovieList();
 			UpdateListView();
 			//
 			//TODO: добавьте код конструктора
@@ -42,7 +42,7 @@ namespace WinAppFilmLibrary {
 		}
 	private: System::Windows::Forms::ListView^ listView;
 		   List<Movie^>^ list_view_movie;
-		   Storage^ sr;
+		   Movies^ movies;
 	protected:
 	private: System::Windows::Forms::ColumnHeader^ Poster;
 	private: System::Windows::Forms::ColumnHeader^ Title;

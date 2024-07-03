@@ -16,11 +16,10 @@ namespace WinAppFilmLibrary {
 	public ref class InsertForm : public System::Windows::Forms::Form
 	{
 	public:
-		InsertForm(EditDBForm^ editForm, Storage^ sr)
+		InsertForm(EditDBForm^ editForm, Movies^ movies)
 		{
 			InitializeComponent();
-			this->editForm = editForm;
-			this->sr = sr;
+			this->movies = movies;;
 			//
 			//TODO: добавьте код конструктора
 			//
@@ -39,9 +38,10 @@ namespace WinAppFilmLibrary {
 		}
 
 	private:
-		EditDBForm^ editForm;
-		Storage^ sr;
-		Bitmap^ img;
+		EditDBForm^ parent;
+		Movies^ movies;
+		int count = 0;
+		Bitmap^ img; //
 
 	private: System::Windows::Forms::Label^ label_Poster;
 	private: System::Windows::Forms::Label^ label_Title;
