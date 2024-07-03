@@ -57,10 +57,14 @@ namespace WinAppFilmLibrary {
 
 
 	private: System::Windows::Forms::DateTimePicker^ dateTimePicker1;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::Label^ label1_Title;
+	private: System::Windows::Forms::Label^ label2_Data;
+	private: System::Windows::Forms::Label^ label3_Rating;
+	private: System::Windows::Forms::Label^ label_to;
+
+
+
+
 
 
 
@@ -88,10 +92,10 @@ namespace WinAppFilmLibrary {
 			this->textBox_RatingFrom = (gcnew System::Windows::Forms::TextBox());
 			this->textBox_Ratingto = (gcnew System::Windows::Forms::TextBox());
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label1_Title = (gcnew System::Windows::Forms::Label());
+			this->label2_Data = (gcnew System::Windows::Forms::Label());
+			this->label3_Rating = (gcnew System::Windows::Forms::Label());
+			this->label_to = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// listView
@@ -185,59 +189,59 @@ namespace WinAppFilmLibrary {
 			this->dateTimePicker1->TabIndex = 6;
 			this->dateTimePicker1->ValueChanged += gcnew System::EventHandler(this, &SearcForm::dateTimePicker1_ValueChanged);
 			// 
-			// label1
+			// label1_Title
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1_Title->AutoSize = true;
+			this->label1_Title->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->Location = System::Drawing::Point(11, 15);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(93, 23);
-			this->label1->TabIndex = 7;
-			this->label1->Text = L"Название";
+			this->label1_Title->Location = System::Drawing::Point(4, 15);
+			this->label1_Title->Name = L"label1_Title";
+			this->label1_Title->Size = System::Drawing::Size(93, 23);
+			this->label1_Title->TabIndex = 7;
+			this->label1_Title->Text = L"Название";
 			// 
-			// label2
+			// label2_Data
 			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label2_Data->AutoSize = true;
+			this->label2_Data->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(11, 60);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(50, 23);
-			this->label2->TabIndex = 8;
-			this->label2->Text = L"Дата";
+			this->label2_Data->Location = System::Drawing::Point(4, 60);
+			this->label2_Data->Name = L"label2_Data";
+			this->label2_Data->Size = System::Drawing::Size(115, 23);
+			this->label2_Data->TabIndex = 8;
+			this->label2_Data->Text = L"Дата выхода";
 			// 
-			// label3
+			// label3_Rating
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label3_Rating->AutoSize = true;
+			this->label3_Rating->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label3->Location = System::Drawing::Point(11, 106);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(81, 23);
-			this->label3->TabIndex = 9;
-			this->label3->Text = L"Рейтинг";
+			this->label3_Rating->Location = System::Drawing::Point(4, 107);
+			this->label3_Rating->Name = L"label3_Rating";
+			this->label3_Rating->Size = System::Drawing::Size(81, 23);
+			this->label3_Rating->TabIndex = 9;
+			this->label3_Rating->Text = L"Рейтинг";
 			// 
-			// label4
+			// label_to
 			// 
-			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label_to->AutoSize = true;
+			this->label_to->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label4->Location = System::Drawing::Point(236, 107);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(30, 23);
-			this->label4->TabIndex = 10;
-			this->label4->Text = L"до";
+			this->label_to->Location = System::Drawing::Point(236, 107);
+			this->label_to->Name = L"label_to";
+			this->label_to->Size = System::Drawing::Size(30, 23);
+			this->label_to->TabIndex = 10;
+			this->label_to->Text = L"до";
 			// 
 			// SearcForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1094, 726);
-			this->Controls->Add(this->label4);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->label1);
+			this->Controls->Add(this->label_to);
+			this->Controls->Add(this->label3_Rating);
+			this->Controls->Add(this->label2_Data);
+			this->Controls->Add(this->label1_Title);
 			this->Controls->Add(this->dateTimePicker1);
 			this->Controls->Add(this->textBox_Ratingto);
 			this->Controls->Add(this->textBox_RatingFrom);

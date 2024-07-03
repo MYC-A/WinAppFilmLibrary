@@ -17,7 +17,7 @@ void WinAppFilmLibrary::SearcForm::UpdateListView()
 		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap(movie->Poster));
 
 		item->SubItems->Add(movie->Title);
-		item->SubItems->Add(movie->Data.ToString());
+		item->SubItems->Add(movie->Data.ToShortDateString());
 		item->SubItems->Add(String::Join(", ", movie->Genre));
 		item->SubItems->Add(movie->Rating.ToString());
 		item->SubItems->Add(movie->Annotation);
@@ -46,9 +46,12 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 	try {
 		double tmp_RatingFrom = Convert::ToDouble(this->textBox_RatingFrom->Text);
 		double tmp_Ratingto = Convert::ToDouble(this->textBox_Ratingto->Text);
+		Rating_flag = true;
+		//if (tmp_Ratingto == 0) {
+		
 	}
 	catch(System::Exception^){
-		bool Rating_flag = false;
+		//Rating_flag = false;
 	}
 
 

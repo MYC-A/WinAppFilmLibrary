@@ -13,20 +13,22 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 	listView->DataBindings->Clear();
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
-	imageList->ImageSize = System::Drawing::Size(150, 210);
+	imageList->ImageSize = System::Drawing::Size(110, 120); //
 	int count = 0;//Добавить
 	System::GC::Collect();//Сборка мусора
 
 	for each (Movie ^ movie in sr->movieList)
 	{   //Bitmap
+		Bitmap^ a = gcnew Bitmap(movie->Poster);
+				
 		ListViewItem^ item = gcnew ListViewItem();
 
-		//item->ImageIndex = count++; //
+		item->ImageIndex = count++; //
 
-		item->ImageKey = movie->Id.ToString(); //
+		//item->ImageKey = movie->Id.ToString(); //
 
 
-		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap(movie->Poster));
+		imageList->Images->Add(movie->Id.ToString(), a);
 
 		item->SubItems->Add(movie->Title);
 		item->SubItems->Add(movie->Data.ToShortDateString());
@@ -35,7 +37,9 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 		item->SubItems->Add(movie->Annotation);
 		item->SubItems->Add(movie->Id.ToString());
 		listView->Items->Add(item);
-		delete item;
+		//delete item;
+		a = nullptr;
+		delete a;
 	}
 	listView->SmallImageList = imageList;
 	listView->EndUpdate();
@@ -103,7 +107,6 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Delete_Click(System::Object^ 
 System::Void WinAppFilmLibrary::EditDBForm::button1_Duplicate_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	int index = 0;
-	int flag = false; // Вывод что дубликаты удалены
 	for (int i = 0; i < sr->movieList->Count; i++) {
 		for (int j = i + 1; j < sr->movieList->Count; j++)
 		{
