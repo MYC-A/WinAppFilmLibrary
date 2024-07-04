@@ -15,18 +15,21 @@ void WinAppFilmLibrary::MenuForm1::InitializeBDFilms()
 
 System::Void WinAppFilmLibrary::MenuForm1::button1_Close_Click(System::Object^ sender, System::EventArgs^ e)
 {
-    int count = movies->getCurrent_Id();
-    MessageBox::Show(count.ToString(), "Закрытие", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+    Application::OpenForms["MyForm"]->Show();
+    this->Close();
+    delete this;
     return System::Void();
 }
 
 System::Void WinAppFilmLibrary::MenuForm1::button_Editing_Click(System::Object^ sender, System::EventArgs^ e)
 {
     EditDBForm^ iftr = gcnew EditDBForm(movies);
-    iftr->StartPosition = this->StartPosition;
-    iftr->ShowDialog();
-    delete iftr;
-    iftr = nullptr;
+    iftr->Left = this->Left;
+    iftr->Top = this->Top;
+    iftr->Show();
+    this->Hide();
+    //delete iftr;
+    //iftr = nullptr;
     System::GC::Collect();//
     return System::Void();
 }
@@ -34,9 +37,13 @@ System::Void WinAppFilmLibrary::MenuForm1::button_Editing_Click(System::Object^ 
 System::Void WinAppFilmLibrary::MenuForm1::button_Search_Click(System::Object^ sender, System::EventArgs^ e)
 {
     SearcForm^ iftr = gcnew SearcForm(movies);
-    iftr->ShowDialog();
-    delete iftr;
-    iftr = nullptr;
+    iftr->Left = this->Left;
+    iftr->Top = this->Top;
+    iftr->Show();
+    this->Hide();
+    
+    //delete iftr;
+    //iftr = nullptr;
     //iftr = nullptr;
     //System::GC::Collect();
     return System::Void();

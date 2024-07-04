@@ -64,6 +64,7 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::Button^ button_Clear;
 	private: System::Windows::Forms::PictureBox^ pictureBox1_Poster;
 	private: System::Windows::Forms::Button^ button1_Load;
+	private: System::Windows::Forms::Button^ button_Close;
 		   /// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
@@ -92,6 +93,7 @@ namespace WinAppFilmLibrary {
 			this->button_Clear = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1_Poster = (gcnew System::Windows::Forms::PictureBox());
 			this->button1_Load = (gcnew System::Windows::Forms::Button());
+			this->button_Close = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1_Poster))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -155,7 +157,7 @@ namespace WinAppFilmLibrary {
 			this->textBox_Annotation->Location = System::Drawing::Point(127, 376);
 			this->textBox_Annotation->Multiline = true;
 			this->textBox_Annotation->Name = L"textBox_Annotation";
-			this->textBox_Annotation->Size = System::Drawing::Size(492, 98);
+			this->textBox_Annotation->Size = System::Drawing::Size(441, 98);
 			this->textBox_Annotation->TabIndex = 5;
 			this->textBox_Annotation->TextChanged += gcnew System::EventHandler(this, &InsertForm::textBox_Annotation_TextChanged);
 			// 
@@ -191,6 +193,7 @@ namespace WinAppFilmLibrary {
 			this->textBox_Genre->Name = L"textBox_Genre";
 			this->textBox_Genre->Size = System::Drawing::Size(200, 20);
 			this->textBox_Genre->TabIndex = 9;
+			this->textBox_Genre->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &InsertForm::textBox_Genre_KeyPress);
 			// 
 			// textBox_Rating
 			// 
@@ -198,6 +201,7 @@ namespace WinAppFilmLibrary {
 			this->textBox_Rating->Name = L"textBox_Rating";
 			this->textBox_Rating->Size = System::Drawing::Size(195, 20);
 			this->textBox_Rating->TabIndex = 10;
+			this->textBox_Rating->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &InsertForm::textBox_Rating_KeyPress);
 			// 
 			// dateTimePicker1
 			// 
@@ -210,9 +214,9 @@ namespace WinAppFilmLibrary {
 			// 
 			this->button_Save->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button_Save->Location = System::Drawing::Point(529, 38);
+			this->button_Save->Location = System::Drawing::Point(543, 20);
 			this->button_Save->Name = L"button_Save";
-			this->button_Save->Size = System::Drawing::Size(114, 37);
+			this->button_Save->Size = System::Drawing::Size(131, 58);
 			this->button_Save->TabIndex = 12;
 			this->button_Save->Text = L"Сохранить";
 			this->button_Save->UseVisualStyleBackColor = true;
@@ -222,12 +226,13 @@ namespace WinAppFilmLibrary {
 			// 
 			this->button_Clear->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button_Clear->Location = System::Drawing::Point(529, 95);
+			this->button_Clear->Location = System::Drawing::Point(543, 123);
 			this->button_Clear->Name = L"button_Clear";
-			this->button_Clear->Size = System::Drawing::Size(114, 41);
+			this->button_Clear->Size = System::Drawing::Size(131, 58);
 			this->button_Clear->TabIndex = 14;
 			this->button_Clear->Text = L"Отменить";
 			this->button_Clear->UseVisualStyleBackColor = true;
+			this->button_Clear->Click += gcnew System::EventHandler(this, &InsertForm::button_Clear_Click);
 			// 
 			// pictureBox1_Poster
 			// 
@@ -251,11 +256,24 @@ namespace WinAppFilmLibrary {
 			this->button1_Load->UseVisualStyleBackColor = true;
 			this->button1_Load->Click += gcnew System::EventHandler(this, &InsertForm::button1_Load_Click);
 			// 
+			// button_Close
+			// 
+			this->button_Close->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button_Close->Location = System::Drawing::Point(553, 480);
+			this->button_Close->Name = L"button_Close";
+			this->button_Close->Size = System::Drawing::Size(131, 58);
+			this->button_Close->TabIndex = 17;
+			this->button_Close->Text = L"Назад";
+			this->button_Close->UseVisualStyleBackColor = true;
+			this->button_Close->Click += gcnew System::EventHandler(this, &InsertForm::button_Close_Click);
+			// 
 			// InsertForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(682, 524);
+			this->ClientSize = System::Drawing::Size(696, 541);
+			this->Controls->Add(this->button_Close);
 			this->Controls->Add(this->button1_Load);
 			this->Controls->Add(this->pictureBox1_Poster);
 			this->Controls->Add(this->button_Clear);
@@ -273,6 +291,7 @@ namespace WinAppFilmLibrary {
 			this->Controls->Add(this->label_Title);
 			this->Controls->Add(this->label_Poster);
 			this->Name = L"InsertForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"InsertForm";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &InsertForm::InsertForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &InsertForm::InsertForm_Load);
@@ -288,5 +307,9 @@ private: System::Void textBox_Annotation_TextChanged(System::Object^ sender, Sys
 private: System::Void button1_Load_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void InsertForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
 private: System::Void InsertForm_Load(System::Object^ sender, System::EventArgs^ e);
+private: System::Void textBox_Rating_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
+private: System::Void textBox_Genre_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
+private: System::Void button_Clear_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void button_Close_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }

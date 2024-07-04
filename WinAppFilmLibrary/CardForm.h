@@ -44,7 +44,7 @@ namespace WinAppFilmLibrary {
 		}
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: int index;
-		   Movie^ SuitableMovie = gcnew Movie();
+		   Movie^ SuitableMovie;
 		   Movies^ movies;
 		   EditDBForm^ parent;
 		   Bitmap^ img;
@@ -74,7 +74,8 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::Button^ button1_LoadN;
 	private: System::Windows::Forms::TextBox^ textBox_Poster;
 	private: System::Windows::Forms::Button^ button_Cancel;
-	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
+
+	private: System::Windows::Forms::Button^ button1_Close;
 	private: System::ComponentModel::IContainer^ components;
 
 
@@ -100,7 +101,6 @@ namespace WinAppFilmLibrary {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = (gcnew System::ComponentModel::Container());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label1_Annotation = (gcnew System::Windows::Forms::Label());
@@ -120,15 +120,15 @@ namespace WinAppFilmLibrary {
 			this->button1_LoadN = (gcnew System::Windows::Forms::Button());
 			this->textBox_Poster = (gcnew System::Windows::Forms::TextBox());
 			this->button_Cancel = (gcnew System::Windows::Forms::Button());
-			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->button1_Close = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(13, 13);
+			this->pictureBox1->Location = System::Drawing::Point(16, 21);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(293, 311);
+			this->pictureBox1->Size = System::Drawing::Size(265, 293);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
@@ -160,9 +160,9 @@ namespace WinAppFilmLibrary {
 			// 
 			this->button1_Change->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1_Change->Location = System::Drawing::Point(618, 77);
+			this->button1_Change->Location = System::Drawing::Point(618, 24);
 			this->button1_Change->Name = L"button1_Change";
-			this->button1_Change->Size = System::Drawing::Size(141, 42);
+			this->button1_Change->Size = System::Drawing::Size(141, 53);
 			this->button1_Change->TabIndex = 9;
 			this->button1_Change->Text = L"Изменить";
 			this->button1_Change->UseVisualStyleBackColor = true;
@@ -173,9 +173,9 @@ namespace WinAppFilmLibrary {
 			this->button1_Save->Enabled = false;
 			this->button1_Save->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1_Save->Location = System::Drawing::Point(618, 174);
+			this->button1_Save->Location = System::Drawing::Point(618, 130);
 			this->button1_Save->Name = L"button1_Save";
-			this->button1_Save->Size = System::Drawing::Size(141, 42);
+			this->button1_Save->Size = System::Drawing::Size(141, 56);
 			this->button1_Save->TabIndex = 10;
 			this->button1_Save->Text = L"Сохранить";
 			this->button1_Save->UseVisualStyleBackColor = true;
@@ -244,18 +244,20 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Rating->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
 			this->textBox1_Rating->Location = System::Drawing::Point(413, 71);
 			this->textBox1_Rating->Name = L"textBox1_Rating";
-			this->textBox1_Rating->Size = System::Drawing::Size(136, 25);
+			this->textBox1_Rating->Size = System::Drawing::Size(161, 25);
 			this->textBox1_Rating->TabIndex = 7;
+			this->textBox1_Rating->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &CardForm::textBox1_Rating_KeyPress);
 			// 
 			// textBox1_Genre
 			// 
 			this->textBox1_Genre->BackColor = System::Drawing::Color::Snow;
 			this->textBox1_Genre->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->textBox1_Genre->Location = System::Drawing::Point(413, 198);
+			this->textBox1_Genre->Location = System::Drawing::Point(402, 197);
 			this->textBox1_Genre->Name = L"textBox1_Genre";
-			this->textBox1_Genre->Size = System::Drawing::Size(136, 25);
+			this->textBox1_Genre->Size = System::Drawing::Size(172, 25);
 			this->textBox1_Genre->TabIndex = 9;
+			this->textBox1_Genre->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &CardForm::textBox1_Genre_KeyPress);
 			// 
 			// dateTimePicker1
 			// 
@@ -263,7 +265,7 @@ namespace WinAppFilmLibrary {
 				static_cast<System::Byte>(204)));
 			this->dateTimePicker1->Location = System::Drawing::Point(413, 130);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(136, 25);
+			this->dateTimePicker1->Size = System::Drawing::Size(161, 25);
 			this->dateTimePicker1->TabIndex = 11;
 			// 
 			// textBox1_Title
@@ -274,7 +276,7 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Title->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
 			this->textBox1_Title->Location = System::Drawing::Point(413, 21);
 			this->textBox1_Title->Name = L"textBox1_Title";
-			this->textBox1_Title->Size = System::Drawing::Size(136, 25);
+			this->textBox1_Title->Size = System::Drawing::Size(161, 25);
 			this->textBox1_Title->TabIndex = 12;
 			// 
 			// textBox1_Release
@@ -283,9 +285,9 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Release->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox1_Release->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
-			this->textBox1_Release->Location = System::Drawing::Point(413, 258);
+			this->textBox1_Release->Location = System::Drawing::Point(402, 258);
 			this->textBox1_Release->Name = L"textBox1_Release";
-			this->textBox1_Release->Size = System::Drawing::Size(136, 25);
+			this->textBox1_Release->Size = System::Drawing::Size(172, 25);
 			this->textBox1_Release->TabIndex = 10;
 			// 
 			// label1
@@ -325,23 +327,32 @@ namespace WinAppFilmLibrary {
 			this->button_Cancel->Enabled = false;
 			this->button_Cancel->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button_Cancel->Location = System::Drawing::Point(618, 258);
+			this->button_Cancel->Location = System::Drawing::Point(618, 240);
 			this->button_Cancel->Name = L"button_Cancel";
-			this->button_Cancel->Size = System::Drawing::Size(141, 42);
+			this->button_Cancel->Size = System::Drawing::Size(141, 56);
 			this->button_Cancel->TabIndex = 16;
 			this->button_Cancel->Text = L"Отменить";
 			this->button_Cancel->UseVisualStyleBackColor = true;
+			this->button_Cancel->Click += gcnew System::EventHandler(this, &CardForm::button_Cancel_Click);
 			// 
-			// contextMenuStrip1
+			// button1_Close
 			// 
-			this->contextMenuStrip1->Name = L"contextMenuStrip1";
-			this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
+			this->button1_Close->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1_Close->Location = System::Drawing::Point(618, 444);
+			this->button1_Close->Name = L"button1_Close";
+			this->button1_Close->Size = System::Drawing::Size(141, 56);
+			this->button1_Close->TabIndex = 17;
+			this->button1_Close->Text = L"Назад";
+			this->button1_Close->UseVisualStyleBackColor = true;
+			this->button1_Close->Click += gcnew System::EventHandler(this, &CardForm::button1_Close_Click);
 			// 
 			// CardForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(771, 536);
+			this->Controls->Add(this->button1_Close);
 			this->Controls->Add(this->button_Cancel);
 			this->Controls->Add(this->textBox_Poster);
 			this->Controls->Add(this->button1_LoadN);
@@ -361,7 +372,9 @@ namespace WinAppFilmLibrary {
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label1_Title);
 			this->Controls->Add(this->label1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->Name = L"CardForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"CardForm";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &CardForm::CardForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &CardForm::CardForm_Load);
@@ -380,5 +393,9 @@ private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 }
+private: System::Void textBox1_Rating_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
+private: System::Void textBox1_Genre_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
+private: System::Void button_Cancel_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }

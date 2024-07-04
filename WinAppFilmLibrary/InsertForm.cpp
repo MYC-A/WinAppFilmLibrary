@@ -72,3 +72,95 @@ System::Void WinAppFilmLibrary::InsertForm::InsertForm_Load(System::Object^ send
 	System::GC::Collect();
 	return System::Void();
 }
+
+System::Void WinAppFilmLibrary::InsertForm::textBox_Rating_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
+{
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+
+	// Проверка на ввод вещественных чисел от 0 до 10
+	if (e->KeyChar == ',') {
+		// Проверка на наличие только одной точки
+		if (textBox_Rating->Text->Contains(",")) {
+			e->Handled = true;
+		}
+	}
+	if (textBox_Rating->Text == "0" && e->KeyChar != ',' && e->KeyChar != '\b')
+	{
+		e->Handled = true;
+	}
+	//if ( (textBox_Rating->Text->StartsWith("0") && e->KeyChar != ',') )
+	//{e->Handled = true;}
+	if (Char::IsDigit(e->KeyChar)) {
+		// Проверка на ввод чисел в диапазоне от 0 до 10
+		double num = Double::Parse(textBox_Rating->Text + e->KeyChar);
+		if (num < 0 || num > 10) {
+			e->Handled = true;
+		}
+	}
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::InsertForm::textBox_Genre_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
+{
+	String^ Symbol = e->KeyChar.ToString();
+
+	if (!System::Text::RegularExpressions::Regex::IsMatch(Symbol, L"[а-яА-Яa-zA-Z, ]") &&
+		e->KeyChar != (char)Keys::Back && e->KeyChar != (char)Keys::Delete) {
+		e->Handled = true;
+		return;
+	}
+
+
+
+	// Если текущий ввод - запятая
+	if (Symbol == ",") {
+		// Проверяем, не стоит ли запятая в конце текста
+		if (textBox_Genre->Text->EndsWith(",")) {
+			e->Handled = true;
+			return;
+		}
+	}
+
+	// Если текущий ввод - пробел
+	if (Symbol == " ") {
+		// Проверяем, не стоит ли пробел после запятой
+		if (!textBox_Genre->Text->EndsWith(",")) {
+			e->Handled = true;
+			return;
+		}
+		// Проверяем, есть ли уже пробел после запятой
+		if (textBox_Genre->Text->Length > 1 && textBox_Genre->Text[textBox_Genre->Text->Length - 2] == ',') {
+			e->Handled = true;
+			return;
+		}
+	}
+
+	// Запрещаем ввод точек
+	if (Symbol == ".") {
+		e->Handled = true;
+		return;
+	}
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::InsertForm::button_Clear_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	for each (Control ^ control in Controls)
+	{
+		if (TextBox::typeid == control->GetType())
+		{
+			safe_cast<TextBox^>(control)->Text = String::Empty;
+		}
+	}
+	pictureBox1_Poster->Image = nullptr;
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::InsertForm::button_Close_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	this->Close();
+	return System::Void();
+}
+

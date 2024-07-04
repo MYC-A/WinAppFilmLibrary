@@ -45,20 +45,11 @@ void Storage::load_Movie(Movies^ movies)
     String^ line;
 
     while ((line = sr->ReadLine()) != nullptr) {
-        Movie^ movie = gcnew Movie();
         if (line == "") {
         	break;
         }
         array<String^>^ data = line->Split('|');
-        movie->Id = Convert::ToInt32(data[0]);
-        movie->Poster = data[1];
-        movie->Title = data[2];
-        movie->Data = Convert::ToDateTime(data[3]);
-        movie->Genre = data[4]->Split(',');
-        movie->Rating = Convert::ToDouble(data[5]);
-        movie->Annotation = data[6];
-        movie->Release = Convert::ToBoolean(data[7]);
-
+        Movie^ movie = gcnew Movie(Convert::ToInt32(data[0]), data[1], data[2], Convert::ToDateTime(data[3]), data[4]->Split(','), Convert::ToDouble(data[5]), data[6]);
         movies->addMovie(movie);
 
         //this->movieList->Add(movie);

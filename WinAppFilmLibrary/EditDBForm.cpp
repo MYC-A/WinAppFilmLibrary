@@ -161,7 +161,7 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Delete_Click(System::Object^ 
 				break;
 			}
 		}
-		listView->Items->RemoveByKey(Name); 
+		listView->Items->RemoveByKey(Name); //Перемтановка, нужно ли
 	}
 	catch(System::Exception^){
 		MessageBox::Show("Выберите фильм", "Предупреждение", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -201,6 +201,21 @@ System::Void WinAppFilmLibrary::EditDBForm::button1_Duplicate_Click(System::Obje
 }
 
 System::Void WinAppFilmLibrary::EditDBForm::EditDBForm_Load(System::Object^ sender, System::EventArgs^ e)
+{
+	System::GC::Collect();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::EditDBForm::button_Rearward_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	Application::OpenForms["MenuForm1"]->Show();
+	this->Close();
+	delete this;
+	//Добавить
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::EditDBForm::EditDBForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e)
 {
 	System::GC::Collect();
 	return System::Void();

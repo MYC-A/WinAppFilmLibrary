@@ -6,10 +6,17 @@ Movie::Movie(int Id, String^ Poster, String^ Title, DateTime Data, array<String^
     this->Title = Title;
     this->Poster = Poster;
     this->Data = Data;
-    this->Genre = Genre;
+
+    String^ genres = String::Join(",", Genre);
+    genres = genres->Replace(" ", ""); // Удаляем все пробелы
+    genres = genres->TrimEnd(','); // Удаляем последнюю запятую, если есть
+
+    this->Genre = genres->Split(',');
+
     this->Rating = Rating;
     this->Annotation = Annotation;
-    this->Release = true;
+
+    this->Release = (this->Data.Date <= DateTime::Now.Date);
     return;
 }
 

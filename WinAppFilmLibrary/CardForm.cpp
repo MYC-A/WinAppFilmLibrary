@@ -4,9 +4,13 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 {
 	if (pictureBox1->Image != nullptr)
 	{
+		delete img;
 		delete pictureBox1->Image;
 	}
-	this->SuitableMovie = this->movies->find_Movie_index(this->index);
+	if (SuitableMovie == nullptr)
+	{
+		this->SuitableMovie = this->movies->find_Movie_index(this->index);
+	}
 
 	this->textBox_Poster->Text = SuitableMovie->Poster;
 	this->button1_LoadN->Visible = false;
@@ -30,9 +34,11 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 	this->textBox1->ReadOnly = true;
 	
 	//this->textBox2->ReadOnly = true;
-	Bitmap^ img = gcnew Bitmap(textBox_Poster->Text); //
+
+	img = gcnew Bitmap(SuitableMovie->Poster); //
 	this->pictureBox1->Image = img;
 	this->pictureBox1->Enabled = false;
+
 }
 
 void WinAppFilmLibrary::CardForm::DisplayForm()
@@ -46,7 +52,7 @@ void WinAppFilmLibrary::CardForm::DisplayForm()
 	this->textBox1_Genre->ReadOnly = false;
 
 
-	this->textBox1_Release->ReadOnly = false;
+	this->textBox1_Release->ReadOnly = true;
 
 
 	this->dateTimePicker1->Enabled = true;
@@ -59,7 +65,9 @@ void WinAppFilmLibrary::CardForm::DisplayForm()
 
 	this->button1_Save->Enabled = true;
 	this->button1_LoadN->Visible = true;
+	this->button_Cancel->Enabled = true;
 	this->button1_Change->Enabled = false;
+
 	return;
 }
 
@@ -97,7 +105,15 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		String^ tmp_Title = this->textBox1_Title->Text;
 		String^ tmp_Annotation = textBox1->Text;
 		DateTime tmp_Data = this->dateTimePicker1->Value;
+		bool tmp_Release = (tmp_Data <= DateTime::Now.Date);
 		array<String^>^ tmp_Genre = this->textBox1_Genre->Text->Split(',');
+
+		String^ genres = String::Join(",", tmp_Genre);
+		genres = genres->Replace(" ", ""); // Удаляем все пробелы
+		genres = genres->TrimEnd(','); // Удаляем последнюю запятую, если есть
+		
+		tmp_Genre = genres->Split(',');
+
 		double tmp_Rating;
 		try {
 			double tmp_Rating1 = Convert::ToDouble(this->textBox1_Rating->Text);
@@ -115,6 +131,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		SuitableMovie->Data = tmp_Data;
 		SuitableMovie->Genre = tmp_Genre;
 		SuitableMovie->Rating = tmp_Rating;
+		SuitableMovie->Release = tmp_Release;
 		parent->EditForDisplays(SuitableMovie->Id.ToString(), index, count);
 		Storage::save_AllMovie(movies);
 		System::GC::Collect();
@@ -124,6 +141,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		MessageBox::Show("Карточка заполнена неполностью", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 	this->button1_Save->Enabled = false;
+	this->button_Cancel->Enabled = false;
 	this->button1_Change->Enabled = true;
 
 	ShowItem();
@@ -171,5 +189,91 @@ System::Void WinAppFilmLibrary::CardForm::CardForm_FormClosing(System::Object^ s
 		delete img;
 	}
 	System::GC::Collect();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::CardForm::textBox1_Rating_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
+{
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+
+	// Проверка на ввод вещественных чисел от 0 до 10
+	if (e->KeyChar == ',') {
+		// Проверка на наличие только одной точки
+		if (textBox1_Rating->Text->Contains(",")) {
+			e->Handled = true;
+		}
+	}
+	if (textBox1_Rating->Text == "0" && e->KeyChar != ',' && e->KeyChar != '\b')
+	{
+		e->Handled = true;
+	}
+	//if ( (textBox_Rating->Text->StartsWith("0") && e->KeyChar != ',') )
+	//{e->Handled = true;}
+	if (Char::IsDigit(e->KeyChar)) {
+		// Проверка на ввод чисел в диапазоне от 0 до 10
+		double num = Double::Parse(textBox1_Rating->Text + e->KeyChar);
+		if (num < 0 || num > 10) {
+			e->Handled = true;
+		}
+	}
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::CardForm::textBox1_Genre_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
+{
+	String^ Symbol = e->KeyChar.ToString();
+	if (!System::Text::RegularExpressions::Regex::IsMatch(Symbol, L"[а-яА-Яa-zA-Z, ]") &&
+		e->KeyChar != (char)Keys::Back && e->KeyChar != (char)Keys::Delete) {
+		e->Handled = true;
+		return;
+	}
+
+
+
+	// Если текущий ввод - запятая
+	if (Symbol == ",") {
+		// Проверяем, не стоит ли запятая в конце текста
+		if (textBox1_Genre->Text->EndsWith(",")) {
+			e->Handled = true;
+			return;
+		}
+	}
+
+	// Если текущий ввод - пробел
+	if (Symbol == " ") {
+		// Проверяем, не стоит ли пробел после запятой
+		if (!textBox1_Genre->Text->EndsWith(",")) {
+			e->Handled = true;
+			return;
+		}
+		// Проверяем, есть ли уже пробел после запятой
+		if (textBox1_Genre->Text->Length > 1 && textBox1_Genre->Text[textBox1_Genre->Text->Length - 2] == ',') {
+			e->Handled = true;
+			return;
+		}
+	}
+
+	// Запрещаем ввод точек
+	if (Symbol == ".") {
+		e->Handled = true;
+		return;
+	}
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::CardForm::button_Cancel_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	ShowItem();
+	this->button1_Change->Enabled = true;
+	this->button_Cancel->Enabled = false;
+	this->button1_Save->Enabled = false;
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::CardForm::button1_Close_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	this->Close();
 	return System::Void();
 }

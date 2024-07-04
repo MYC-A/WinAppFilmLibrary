@@ -206,6 +206,7 @@ namespace WinAppFilmLibrary {
 			this->button_Rearward->TabIndex = 3;
 			this->button_Rearward->Text = L"Назад";
 			this->button_Rearward->UseVisualStyleBackColor = false;
+			this->button_Rearward->Click += gcnew System::EventHandler(this, &EditDBForm::button_Rearward_Click);
 			// 
 			// EditDBForm
 			// 
@@ -221,6 +222,7 @@ namespace WinAppFilmLibrary {
 			this->Name = L"EditDBForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"EditDBForm";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &EditDBForm::EditDBForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &EditDBForm::EditDBForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
@@ -236,5 +238,7 @@ private: System::Void listView_MouseDoubleClick(System::Object^ sender, System::
 private: System::Void button_Delete_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void button1_Duplicate_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void EditDBForm_Load(System::Object^ sender, System::EventArgs^ e);
+private: System::Void button_Rearward_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void EditDBForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
 };
 }
