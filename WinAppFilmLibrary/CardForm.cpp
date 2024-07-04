@@ -30,7 +30,7 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 	this->textBox1->ReadOnly = true;
 	
 	//this->textBox2->ReadOnly = true;
-	Bitmap^ img = gcnew Bitmap(textBox_Poster->Text);
+	Bitmap^ img = gcnew Bitmap(textBox_Poster->Text); //
 	this->pictureBox1->Image = img;
 	this->pictureBox1->Enabled = false;
 }
@@ -116,6 +116,9 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		SuitableMovie->Genre = tmp_Genre;
 		SuitableMovie->Rating = tmp_Rating;
 		parent->EditForDisplays(SuitableMovie->Id.ToString(), index, count);
+		Storage::save_AllMovie(movies);
+		System::GC::Collect();
+
 	}
 	else {
 		MessageBox::Show("Карточка заполнена неполностью", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
