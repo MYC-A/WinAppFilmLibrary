@@ -9,7 +9,8 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 	}
 	if (SuitableMovie == nullptr)
 	{
-		this->SuitableMovie = this->movies->find_Movie_index(this->index);
+		//this->SuitableMovie = this->movies->find_Movie_index(this->index);
+		this->SuitableMovie = this->parent->movies->find_Movie_index(this->index);
 	}
 
 	this->textBox_Poster->Text = SuitableMovie->Poster;
@@ -133,7 +134,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		SuitableMovie->Rating = tmp_Rating;
 		SuitableMovie->Release = tmp_Release;
 		parent->EditForDisplays(SuitableMovie->Id.ToString(), index, count);
-		Storage::save_AllMovie(movies);
+		Storage::save_AllMovie(this->parent->movies);
 		System::GC::Collect();
 
 	}
@@ -151,7 +152,8 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 System::Void WinAppFilmLibrary::CardForm::CardForm_Load(System::Object^ sender, System::EventArgs^ e)
 {
 	System::GC::Collect();
-	parent = dynamic_cast<EditDBForm^>(this->Owner);// Ìועמהû ןונגמי פמנלû
+	parent = dynamic_cast<EditDBForm^>(this->Owner);
+	ShowItem();
 	return System::Void();
 }
 

@@ -111,7 +111,13 @@ List<Movie^>^ Movies::find_Movie(double Rating_From, double Rating_to)
 {
     List<Movie^>^ lm = gcnew List<Movie^>();
     for (int i = 0; i < movieList->Count; i++) {
-        if ((movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to)) {
+        if (movieList[i]->Rating.CompareTo(Rating_From) >= 0) {
+            int s = 1;
+        }
+        if (movieList[i]->Rating.CompareTo(Rating_to) <= 0) {
+            int s = 54;
+        }
+        if ((movieList[i]->Rating.CompareTo(Rating_From) >= 0 && movieList[i]->Rating.CompareTo(Rating_to) <= 0)) {
             lm->Add(movieList[i]);
         }
     }

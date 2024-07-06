@@ -43,15 +43,20 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 
 	double tmp_RatingFrom;
 	double tmp_Ratingto;
-	try {
-		double tmp_RatingFrom = Convert::ToDouble(this->textBox_RatingFrom->Text);
-		double tmp_Ratingto = Convert::ToDouble(this->textBox_Ratingto->Text);
-		Rating_flag = true;
-		//if (tmp_Ratingto == 0) {
-		
-	}
-	catch(System::Exception^){
-		//Rating_flag = false;
+	if (this->textBox_RatingFrom->Text->Length > 0 && this->textBox_Ratingto->Text->Length > 0) {
+		try {
+			double tmp_RatingFrom1 = Convert::ToDouble(this->textBox_RatingFrom->Text);
+			double tmp_Ratingto1 = Convert::ToDouble(this->textBox_Ratingto->Text);
+			tmp_RatingFrom = tmp_RatingFrom1;
+			tmp_Ratingto = tmp_Ratingto1;
+			Rating_flag = true;
+			//if (tmp_Ratingto == 0) {
+
+		}
+		catch (System::Exception^) {
+			MessageBox::Show(L"Не корректный ввод", L"Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+		}
 	}
 
 
@@ -97,10 +102,15 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 		}
 		else if(Rating_flag){
 				list_view_movie = movies->find_Movie(tmp_RatingFrom, tmp_Ratingto);
+				UpdateListView();
+		}
+		else if(list_view_movie != movies->getmovieList()) 
+		{
+			list_view_movie = movies->getmovieList();
+			UpdateListView();
 		}
 		//textBox1_Search->Clear();
 
-    MessageBox::Show(dateTimePicker1->Checked.ToString(), "Нажатие", MessageBoxButtons::OK, MessageBoxIcon::Warning);
     //dateTimePicker1->Checked
 	
 
@@ -138,5 +148,71 @@ System::Void WinAppFilmLibrary::SearcForm::dateTimePicker1_ValueChanged(System::
 System::Void WinAppFilmLibrary::SearcForm::SearcForm_Load(System::Object^ sender, System::EventArgs^ e)
 {
 	System::GC::Collect();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::SearcForm::button1_Close_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	Application::OpenForms["MenuForm1"]->Show();
+	this->Close();
+	delete this;
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::SearcForm::textBox_RatingFrom_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
+{
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+
+	// Проверка на ввод вещественных чисел от 0 до 10
+	if (e->KeyChar == ',') {
+		// Проверка на наличие только одной точки
+		if (textBox_RatingFrom->Text->Contains(",")) {
+			e->Handled = true;
+		}
+	}
+	if (textBox_RatingFrom->Text == "0" && e->KeyChar != ',' && e->KeyChar != '\b')
+	{
+		e->Handled = true;
+	}
+	//if ( (textBox_Rating->Text->StartsWith("0") && e->KeyChar != ',') )
+	//{e->Handled = true;}
+	if (Char::IsDigit(e->KeyChar)) {
+		// Проверка на ввод чисел в диапазоне от 0 до 10
+		double num = Double::Parse(textBox_RatingFrom->Text + e->KeyChar);
+		if (num < 0 || num > 10) {
+			e->Handled = true;
+		}
+	}
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::SearcForm::textBox_Ratingto_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
+{
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+
+	// Проверка на ввод вещественных чисел от 0 до 10
+	if (e->KeyChar == ',') {
+		// Проверка на наличие только одной точки
+		if (textBox_Ratingto->Text->Contains(",")) {
+			e->Handled = true;
+		}
+	}
+	if (textBox_Ratingto->Text == "0" && e->KeyChar != ',' && e->KeyChar != '\b')
+	{
+		e->Handled = true;
+	}
+	//if ( (textBox_Rating->Text->StartsWith("0") && e->KeyChar != ',') )
+	//{e->Handled = true;}
+	if (Char::IsDigit(e->KeyChar)) {
+		// Проверка на ввод чисел в диапазоне от 0 до 10
+		double num = Double::Parse(textBox_Ratingto->Text + e->KeyChar);
+		if (num < 0 || num > 10) {
+			e->Handled = true;
+		}
+	}
 	return System::Void();
 }

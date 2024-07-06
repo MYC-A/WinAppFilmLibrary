@@ -9,7 +9,6 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
 	imageList->ImageSize = System::Drawing::Size(110, 120); //
-	int count = 0;//Добавить
 	System::GC::Collect();//Сборка мусора
 	//List<Movie^>^ movieList1 = movies->getmovieList();
 	for each (Movie ^ movie in movies->getmovieList())
@@ -18,14 +17,9 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 				
 		ListViewItem^ item = gcnew ListViewItem();
 
-		//item->ImageIndex = count++; //
 
 		item->Name = movie->Id.ToString();
 		item->ImageKey = movie->Id.ToString();
-
-		//item->ImageKey = movie->Id.ToString(); //
-
-
 		imageList->Images->Add(movie->Id.ToString(), a);
 
 		item->SubItems->Add(movie->Title);
@@ -35,13 +29,11 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 		item->SubItems->Add(movie->Annotation);
 		item->SubItems->Add(movie->Id.ToString());
 		listView->Items->Add(item);
-		//delete item;
-		a = nullptr;
-		delete a;
+		//a = nullptr;
+		//delete a;
 	}
 	listView->SmallImageList = imageList;
 	listView->EndUpdate();
-	//listView->DataBindings->Clear();
 	System::GC::Collect(); //Добавить
 	return;
 }
@@ -61,7 +53,7 @@ void WinAppFilmLibrary::EditDBForm::AddForDisplays(int Num_additions)
 
 	item->Name = movie1->Id.ToString();
 	ImageList^ imageList = listView->SmallImageList;
-	int count = listView->SmallImageList->Images->Count + 1;
+	//int count = listView->SmallImageList->Images->Count + 1;
 
 	//item->ImageIndex = count;
 	imageList->Images->Add(movie1->Id.ToString(), gcnew Bitmap(movie1->Poster));
@@ -69,7 +61,7 @@ void WinAppFilmLibrary::EditDBForm::AddForDisplays(int Num_additions)
 	item->ImageKey = movie1->Id.ToString();
 
 	item->SubItems->Add(movie1->Title);
-	item->SubItems->Add(movie1->Data.ToString());
+	item->SubItems->Add(movie1->Data.ToShortDateString());
 	item->SubItems->Add(String::Join(", ", movie1->Genre));
 	item->SubItems->Add(movie1->Rating.ToString());
 	item->SubItems->Add(movie1->Annotation);
@@ -118,7 +110,7 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Insert_Click(System::Object^ 
 {
 	//System::GC::Collect();
 
-    InsertForm^ insertForm = gcnew InsertForm(this, movies);
+    InsertForm^ insertForm = gcnew InsertForm();
 	insertForm->Owner = this;
 	insertForm->Left = this->Left;
 	insertForm->Top = this->Top;
@@ -135,7 +127,7 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Insert_Click(System::Object^ 
 
 System::Void WinAppFilmLibrary::EditDBForm::listView_MouseDoubleClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
 {
-	CardForm^iftr = gcnew CardForm(Convert::ToInt32(listView->SelectedItems[0]->SubItems[6]->Text),movies);
+	CardForm^ iftr = gcnew CardForm(Convert::ToInt32(listView->SelectedItems[0]->SubItems[6]->Text));
 	iftr->Owner = this; //Устанавливаем родителя
 	iftr->Left = this->Left;
 	iftr->Top = this->Top;
@@ -153,14 +145,17 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Delete_Click(System::Object^ 
 	try {
 		int id = Convert::ToInt32(listView->SelectedItems[0]->SubItems[6]->Text);
 		button_Delete->Enabled = false;
-		Movie^ deleteMovie;
+		Movie^ delete_tmp_Movie;
 		String^ Name = listView->SelectedItems[0]->Name;
-		for each (Movie ^ movie in movies->getmovieList()) {
-			if (movie->Id == id) {
-				movies->deleteMovie(movie);
-				break;
-			}
-		}
+
+		delete_tmp_Movie = movies->find_Movie_index(id);
+		movies->deleteMovie(delete_tmp_Movie);
+		//for each (Movie ^ movie in movies->getmovieList()) {
+			//if (movie->Id == id) {
+				//movies->deleteMovie(movie);
+				//break;
+			//}
+		//}
 		listView->Items->RemoveByKey(Name); //Перемтановка, нужно ли
 	}
 	catch(System::Exception^){

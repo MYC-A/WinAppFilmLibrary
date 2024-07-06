@@ -18,12 +18,11 @@ namespace WinAppFilmLibrary {
 	public ref class CardForm : public System::Windows::Forms::Form
 	{
 	public:
-		CardForm(int index,Movies^ movies)
+		CardForm(int index)
 		{
 			InitializeComponent();
 			this->index = index;
-			this->movies = movies;
-			ShowItem();
+			//this->movies = movies;
 			//
 			//TODO: добавьте код конструктора
 			//
@@ -45,7 +44,6 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: int index;
 		   Movie^ SuitableMovie;
-		   Movies^ movies;
 		   EditDBForm^ parent;
 		   Bitmap^ img;
 		   int count = 0;

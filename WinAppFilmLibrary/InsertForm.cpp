@@ -2,29 +2,37 @@
 
 System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ sender, System::EventArgs^ e)
 {
+	bool flag = true;
+	
 
-	int tmp_index = movies->getCurrent_Id();
-	movies->SetCurrent_Id(tmp_index + 1);
+	if (flag == true) {
 
-	count++;
-	String^ tmp_Poster = textBox_Poster->Text;
-	String^ tmp_Title = textBox_Title->Text;
-	String^ tmp_Annotation = textBox_Annotation->Text;
-	DateTime tmp_Data = dateTimePicker1->Value;
-	array<String^>^ tmp_Genre = textBox_Genre->Text->Split(',');
-	double tmp_Rating = Convert::ToDouble(textBox_Rating->Text);
+		int tmp_index = parent->movies->getCurrent_Id();
+		parent->movies->SetCurrent_Id(tmp_index + 1);
 
-	Movie^ newMovie = gcnew Movie(tmp_index, tmp_Poster, tmp_Title, tmp_Data, tmp_Genre, tmp_Rating, tmp_Annotation);
-	movies->addMovie(newMovie);
+		count++;
+		String^ tmp_Poster = textBox_Poster->Text;
+		String^ tmp_Title = textBox_Title->Text;
+		String^ tmp_Annotation = textBox_Annotation->Text;
+		DateTime tmp_Data = dateTimePicker1->Value;
+		array<String^>^ tmp_Genre = textBox_Genre->Text->Split(',');
+		double tmp_Rating = Convert::ToDouble(textBox_Rating->Text);
+
+		Movie^ newMovie = gcnew Movie(tmp_index, tmp_Poster, tmp_Title, tmp_Data, tmp_Genre, tmp_Rating, tmp_Annotation);
+		parent->movies->addMovie(newMovie);
 
 
-	Storage::save_Movie(newMovie);
-	Storage::save_Id(movies->getCurrent_Id());
+		Storage::save_Movie(newMovie);
+		Storage::save_Id(parent->movies->getCurrent_Id());
 
-	parent->AddForDisplays(count);
+		parent->AddForDisplays(count);
 
-	delete newMovie; //
-	delete pictureBox1_Poster->Image;
+		delete newMovie; //
+		delete pictureBox1_Poster->Image;
+	}
+	else {
+		MessageBox::Show("Карточка заполнена неполностью", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
 }
 
 System::Void WinAppFilmLibrary::InsertForm::button1_Load_Click(System::Object^ sender, System::EventArgs^ e)

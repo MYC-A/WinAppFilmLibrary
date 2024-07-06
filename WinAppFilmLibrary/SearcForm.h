@@ -61,6 +61,9 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::Label^ label2_Data;
 	private: System::Windows::Forms::Label^ label3_Rating;
 	private: System::Windows::Forms::Label^ label_to;
+	private: System::Windows::Forms::Button^ button1_Close;
+
+
 
 
 
@@ -96,6 +99,7 @@ namespace WinAppFilmLibrary {
 			this->label2_Data = (gcnew System::Windows::Forms::Label());
 			this->label3_Rating = (gcnew System::Windows::Forms::Label());
 			this->label_to = (gcnew System::Windows::Forms::Label());
+			this->button1_Close = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// listView
@@ -113,7 +117,7 @@ namespace WinAppFilmLibrary {
 			this->listView->HideSelection = false;
 			this->listView->Location = System::Drawing::Point(1, 160);
 			this->listView->Name = L"listView";
-			this->listView->Size = System::Drawing::Size(1100, 573);
+			this->listView->Size = System::Drawing::Size(1094, 573);
 			this->listView->TabIndex = 1;
 			this->listView->UseCompatibleStateImageBehavior = false;
 			this->listView->View = System::Windows::Forms::View::Details;
@@ -121,27 +125,27 @@ namespace WinAppFilmLibrary {
 			// Poster
 			// 
 			this->Poster->Text = L"Постер";
-			this->Poster->Width = 153;
+			this->Poster->Width = 198;
 			// 
 			// Title
 			// 
 			this->Title->Text = L"Название";
-			this->Title->Width = 147;
+			this->Title->Width = 200;
 			// 
 			// Data
 			// 
 			this->Data->Text = L"Дата выхода в прокат";
-			this->Data->Width = 162;
+			this->Data->Width = 290;
 			// 
 			// Genre
 			// 
 			this->Genre->Text = L"Жанр";
-			this->Genre->Width = 129;
+			this->Genre->Width = 225;
 			// 
 			// Rating
 			// 
 			this->Rating->Text = L"Рейтинг";
-			this->Rating->Width = 143;
+			this->Rating->Width = 194;
 			// 
 			// textBox1_Search
 			// 
@@ -169,6 +173,7 @@ namespace WinAppFilmLibrary {
 			this->textBox_RatingFrom->Name = L"textBox_RatingFrom";
 			this->textBox_RatingFrom->Size = System::Drawing::Size(100, 20);
 			this->textBox_RatingFrom->TabIndex = 4;
+			this->textBox_RatingFrom->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SearcForm::textBox_RatingFrom_KeyPress);
 			// 
 			// textBox_Ratingto
 			// 
@@ -176,6 +181,7 @@ namespace WinAppFilmLibrary {
 			this->textBox_Ratingto->Name = L"textBox_Ratingto";
 			this->textBox_Ratingto->Size = System::Drawing::Size(100, 20);
 			this->textBox_Ratingto->TabIndex = 5;
+			this->textBox_Ratingto->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SearcForm::textBox_Ratingto_KeyPress);
 			// 
 			// dateTimePicker1
 			// 
@@ -233,11 +239,24 @@ namespace WinAppFilmLibrary {
 			this->label_to->TabIndex = 10;
 			this->label_to->Text = L"до";
 			// 
+			// button1_Close
+			// 
+			this->button1_Close->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1_Close->Location = System::Drawing::Point(930, 12);
+			this->button1_Close->Name = L"button1_Close";
+			this->button1_Close->Size = System::Drawing::Size(152, 47);
+			this->button1_Close->TabIndex = 11;
+			this->button1_Close->Text = L"Назад";
+			this->button1_Close->UseVisualStyleBackColor = true;
+			this->button1_Close->Click += gcnew System::EventHandler(this, &SearcForm::button1_Close_Click);
+			// 
 			// SearcForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1094, 726);
+			this->Controls->Add(this->button1_Close);
 			this->Controls->Add(this->label_to);
 			this->Controls->Add(this->label3_Rating);
 			this->Controls->Add(this->label2_Data);
@@ -263,5 +282,8 @@ private: System::Void button1_Search_Click(System::Object^ sender, System::Event
 private: System::Void SearcForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
 private: System::Void dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e);
 private: System::Void SearcForm_Load(System::Object^ sender, System::EventArgs^ e);
+private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void textBox_RatingFrom_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
+private: System::Void textBox_Ratingto_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
 };
 }
