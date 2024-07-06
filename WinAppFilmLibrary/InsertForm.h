@@ -23,6 +23,8 @@ namespace WinAppFilmLibrary {
 			//TODO: добавьте код конструктора
 			//
 		}
+		bool checking_for_occupancy();
+
 
 	protected:
 		/// <summary>

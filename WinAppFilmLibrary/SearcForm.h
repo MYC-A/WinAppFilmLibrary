@@ -28,6 +28,7 @@ namespace WinAppFilmLibrary {
 			//
 		}
 		void UpdateListView();
+		Movies^ movies;
 
 	protected:
 		/// <summary>
@@ -42,7 +43,6 @@ namespace WinAppFilmLibrary {
 		}
 	private: System::Windows::Forms::ListView^ listView;
 		   List<Movie^>^ list_view_movie;
-		   Movies^ movies;
 	protected:
 	private: System::Windows::Forms::ColumnHeader^ Poster;
 	private: System::Windows::Forms::ColumnHeader^ Title;
@@ -121,6 +121,7 @@ namespace WinAppFilmLibrary {
 			this->listView->TabIndex = 1;
 			this->listView->UseCompatibleStateImageBehavior = false;
 			this->listView->View = System::Windows::Forms::View::Details;
+			this->listView->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &SearcForm::listView_MouseDoubleClick);
 			// 
 			// Poster
 			// 
@@ -285,5 +286,6 @@ private: System::Void SearcForm_Load(System::Object^ sender, System::EventArgs^ 
 private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void textBox_RatingFrom_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
 private: System::Void textBox_Ratingto_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
+private: System::Void listView_MouseDoubleClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
 };
 }

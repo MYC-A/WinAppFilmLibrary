@@ -1,11 +1,34 @@
 #include "InsertForm.h"
 
+bool WinAppFilmLibrary::InsertForm::checking_for_occupancy()
+{
+	Control^ control1 = gcnew Control();
+
+	for each (Control ^ control in this->Controls)
+	{
+		TextBox^ textBox = dynamic_cast<TextBox^>(control);
+		if (textBox != nullptr) {
+			String^ st = textBox->Text;
+			st = st->Replace(" ", "");
+			if (!String::IsNullOrWhiteSpace(st))
+			{
+				continue;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	bool flag = true;
+	bool flag = checking_for_occupancy();;
 	
 
-	if (flag == true) {
+	if (flag) {
 
 		int tmp_index = parent->movies->getCurrent_Id();
 		parent->movies->SetCurrent_Id(tmp_index + 1);

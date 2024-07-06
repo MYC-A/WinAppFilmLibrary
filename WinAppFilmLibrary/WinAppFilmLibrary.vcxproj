@@ -27,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CardForm.cpp" />
+    <ClCompile Include="CardView.cpp" />
     <ClCompile Include="EditDBForm.cpp" />
     <ClCompile Include="HelpForm.cpp" />
     <ClCompile Include="InsertForm.cpp" />
@@ -39,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CardForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="CardView.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="EditDBForm.h">
@@ -66,6 +70,9 @@
   <ItemGroup>
     <EmbeddedResource Include="CardForm.resx">
       <DependentUpon>CardForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardView.resx">
+      <DependentUpon>CardView.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditDBForm.resx">
       <DependentUpon>EditDBForm.h</DependentUpon>

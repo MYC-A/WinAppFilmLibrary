@@ -72,15 +72,8 @@ void WinAppFilmLibrary::CardForm::DisplayForm()
 	return;
 }
 
-System::Void WinAppFilmLibrary::CardForm::button1_Change_Click(System::Object^ sender, System::EventArgs^ e)
+bool WinAppFilmLibrary::CardForm::checking_for_occupancy()
 {
-	DisplayForm();
-	return System::Void();
-}
-
-System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sender, System::EventArgs^ e)
-{
-	bool flag = true;
 	for each (Control ^ control in this->Controls)
 	{
 
@@ -94,13 +87,25 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 			}
 			else
 			{
-				flag = false;
-				break;
+				return false;
 			}
 		}
 	}
+
+	return true;
+}
+
+System::Void WinAppFilmLibrary::CardForm::button1_Change_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	DisplayForm();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	bool flag = checking_for_occupancy();
 	
-	if (flag == true) {
+	if (flag) {
 		count++;
 		String^ tmp_Poster = this->textBox_Poster->Text;
 		String^ tmp_Title = this->textBox1_Title->Text;

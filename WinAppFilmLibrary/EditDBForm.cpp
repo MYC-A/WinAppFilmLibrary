@@ -144,7 +144,6 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Delete_Click(System::Object^ 
 {
 	try {
 		int id = Convert::ToInt32(listView->SelectedItems[0]->SubItems[6]->Text);
-		button_Delete->Enabled = false;
 		Movie^ delete_tmp_Movie;
 		String^ Name = listView->SelectedItems[0]->Name;
 

@@ -29,6 +29,7 @@ namespace WinAppFilmLibrary {
 		}
 		void ShowItem();
 		void DisplayForm();
+		bool checking_for_occupancy();
 
 	protected:
 		/// <summary>

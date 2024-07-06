@@ -1,4 +1,5 @@
 #include "SearcForm.h"
+#include "CardView.h"
 
 void WinAppFilmLibrary::SearcForm::UpdateListView()
 {
@@ -8,12 +9,12 @@ void WinAppFilmLibrary::SearcForm::UpdateListView()
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
 	imageList->ImageSize = System::Drawing::Size(100, 100);
-	int count = 0;//Добавить
 
 	for each (Movie ^ movie in list_view_movie)
 	{
 		ListViewItem^ item = gcnew ListViewItem();
-		item->ImageIndex = count++;
+		item->Name = movie->Id.ToString();
+		item->ImageKey = movie->Id.ToString();
 		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap(movie->Poster));
 
 		item->SubItems->Add(movie->Title);
@@ -214,5 +215,17 @@ System::Void WinAppFilmLibrary::SearcForm::textBox_Ratingto_KeyPress(System::Obj
 			e->Handled = true;
 		}
 	}
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::SearcForm::listView_MouseDoubleClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
+{
+	CardView^ iftr = gcnew CardView(Convert::ToInt32(listView->SelectedItems[0]->SubItems[6]->Text));
+	iftr->Owner = this; //Устанавливаем родителя
+	iftr->Left = this->Left;
+	iftr->Top = this->Top;
+	iftr->ShowDialog();
+	//iftr = nullptr; // стираем ссылку
+	delete iftr; //Удяляем форму
 	return System::Void();
 }
