@@ -81,8 +81,10 @@ void WinAppFilmLibrary::EditDBForm::AddForDisplays(int Num_additions)
 	}
 }
 
-void WinAppFilmLibrary::EditDBForm::EditForDisplays(String^ Name, int index,int Num_additions)
+void WinAppFilmLibrary::EditDBForm::EditForDisplays(String^ Name, int id,int Num_additions)
 {
+	int index = movies->getIndex(id);
+
 	String^ a = Name;
 	ListViewItem^ item = listView->Items[a];
 
@@ -147,7 +149,7 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Delete_Click(System::Object^ 
 		Movie^ delete_tmp_Movie;
 		String^ Name = listView->SelectedItems[0]->Name;
 
-		delete_tmp_Movie = movies->find_Movie_index(id);
+		delete_tmp_Movie = movies->find_Movie_id(id);
 		movies->deleteMovie(delete_tmp_Movie);
 		//for each (Movie ^ movie in movies->getmovieList()) {
 			//if (movie->Id == id) {

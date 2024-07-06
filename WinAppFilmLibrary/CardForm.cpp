@@ -10,7 +10,7 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 	if (SuitableMovie == nullptr)
 	{
 		//this->SuitableMovie = this->movies->find_Movie_index(this->index);
-		this->SuitableMovie = this->parent->movies->find_Movie_index(this->index);
+		this->SuitableMovie = this->parent->movies->find_Movie_id(this->index);
 	}
 
 	this->textBox_Poster->Text = SuitableMovie->Poster;

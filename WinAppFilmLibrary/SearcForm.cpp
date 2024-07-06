@@ -8,14 +8,17 @@ void WinAppFilmLibrary::SearcForm::UpdateListView()
 	System::GC::Collect();//—борка мусора
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
-	imageList->ImageSize = System::Drawing::Size(100, 100);
+	imageList->ImageSize = System::Drawing::Size(120, 110);
+	int count = 0;
 
 	for each (Movie ^ movie in list_view_movie)
 	{
+		Bitmap^ a = gcnew Bitmap(movie->Poster);
 		ListViewItem^ item = gcnew ListViewItem();
 		item->Name = movie->Id.ToString();
-		item->ImageKey = movie->Id.ToString();
-		imageList->Images->Add(movie->Id.ToString(), gcnew Bitmap(movie->Poster));
+		item->ImageIndex = count++;
+		imageList->Images->Add(movie->Id.ToString(), a);
+
 
 		item->SubItems->Add(movie->Title);
 		item->SubItems->Add(movie->Data.ToShortDateString());

@@ -10,6 +10,18 @@ int Movies::getCurrent_Id()
     return Current_Id;
 }
 
+int Movies::getIndex(int id)
+{
+    int index = -1;
+    for each (Movie ^ movie in movieList) {
+        index++;
+        if (movie->Id == id) {
+            return index;
+        }
+
+    }
+}
+
 void Movies::SetCurrent_Id(int id)
 {
     this->Current_Id = id;
@@ -29,6 +41,20 @@ void Movies::RemoveAt(int index)
 {
     movieList->RemoveAt(index);
 }
+
+void Movies::Edit(int index,String^ Poster, String^ Title, String^ Annotation, DateTime Data, array<String^>^ Genre, double Rating,bool Release)
+{
+    Movie^movie = find_Movie_id(index);
+    
+    movie->Poster = Poster;
+    movie->Title = Title;
+    movie->Annotation = Annotation;
+    movie->Data = Data;
+    movie->Genre = Genre;
+    movie->Rating = Rating;
+    movie->Release = Release;
+}
+
 
 Movie^ Movies::getMovie(int index)
 {
@@ -111,12 +137,7 @@ List<Movie^>^ Movies::find_Movie(double Rating_From, double Rating_to)
 {
     List<Movie^>^ lm = gcnew List<Movie^>();
     for (int i = 0; i < movieList->Count; i++) {
-        if (movieList[i]->Rating.CompareTo(Rating_From) >= 0) {
-            int s = 1;
-        }
-        if (movieList[i]->Rating.CompareTo(Rating_to) <= 0) {
-            int s = 54;
-        }
+
         if ((movieList[i]->Rating.CompareTo(Rating_From) >= 0 && movieList[i]->Rating.CompareTo(Rating_to) <= 0)) {
             lm->Add(movieList[i]);
         }
@@ -124,7 +145,7 @@ List<Movie^>^ Movies::find_Movie(double Rating_From, double Rating_to)
     return lm;
 }
 
-Movie^ Movies::find_Movie_index(int index)
+Movie^ Movies::find_Movie_id(int index)
 {
     for each (Movie ^ movie in movieList) {
         if (movie->Id == index) {
@@ -137,7 +158,15 @@ Movie^ Movies::find_Movie_index(int index)
 
 List<Movie^>^ Movies::find_UnRelease_Movie()
 {
-    throw gcnew System::NotImplementedException();
+    List<Movie^>^ lm = gcnew List<Movie^>();
+    for (int i = 0; i < movieList->Count; i++) {
+
+        if (movieList[i]->Release == false)
+        {
+            lm->Add(movieList[i]);
+        }
+    }
+    return lm;
     // TODO: вставьте здесь оператор return
 }
 

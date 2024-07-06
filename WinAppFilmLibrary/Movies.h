@@ -15,6 +15,7 @@ public:
 	int getCount();
 	int getCurrent_Id();
 
+	int getIndex(int id);
 	void SetCurrent_Id(int id);
 
 	void addMovie(Movie^ movie);
@@ -22,6 +23,8 @@ public:
 	void deleteMovie(Movie^ movie);
 
 	void RemoveAt(int index);
+
+	void Edit(int index,String^ Poster, String^ Title, String^ Annotation, DateTime Data, array<String^>^ tmp_Genre, double tmp_Rating,bool Rating);
 
 	Movie^ getMovie(int index);
 
@@ -40,6 +43,6 @@ public:
 
 	List<Movie^>^ find_Movie(double Rating_From, double Rating_to); //Перегрузка метода
 
-	Movie^ find_Movie_index(int index);//Поиск фильма по id
+	Movie^ find_Movie_id(int id);//Поиск фильма по id
 	List<Movie^>^ find_UnRelease_Movie(); // Поиск не вышедших фильмов
 };

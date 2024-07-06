@@ -45,9 +45,9 @@ void Storage::load_Movie(Movies^ movies)
     String^ line;
 
     while ((line = sr->ReadLine()) != nullptr) {
-        if (line == "") {
-        	break;
-        }
+        //if (line == "") {
+        	//break;
+        //}
         array<String^>^ data = line->Split('|');
         Movie^ movie = gcnew Movie(Convert::ToInt32(data[0]), data[1], data[2], Convert::ToDateTime(data[3]), data[4]->Split(','), Convert::ToDouble(data[5]), data[6]);
         movies->addMovie(movie);
