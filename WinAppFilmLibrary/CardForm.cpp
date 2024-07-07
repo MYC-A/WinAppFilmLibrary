@@ -130,14 +130,15 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 			ShowItem();
 			return System::Void();
 		}
-		
-		SuitableMovie->Poster = tmp_Poster;
+		parent->movies->Edit(this->index, tmp_Poster, tmp_Title, tmp_Annotation, tmp_Data, tmp_Genre,tmp_Rating, tmp_Release);
+		/*SuitableMovie->Poster = tmp_Poster;
 		SuitableMovie->Title = tmp_Title;
 		SuitableMovie->Annotation = tmp_Annotation;
 		SuitableMovie->Data = tmp_Data;
 		SuitableMovie->Genre = tmp_Genre;
 		SuitableMovie->Rating = tmp_Rating;
 		SuitableMovie->Release = tmp_Release;
+		*/
 		parent->EditForDisplays(SuitableMovie->Id.ToString(), index, count);
 		Storage::save_AllMovie(this->parent->movies);
 		System::GC::Collect();
