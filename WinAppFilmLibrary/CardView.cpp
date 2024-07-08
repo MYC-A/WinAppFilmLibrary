@@ -59,3 +59,9 @@ System::Void WinAppFilmLibrary::CardView::CardView_FormClosing(System::Object^ s
 	//System::GC::Collect();
 	return System::Void();
 }
+
+System::Void WinAppFilmLibrary::CardView::button1_Close_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	this->Close();
+	return System::Void();
+}

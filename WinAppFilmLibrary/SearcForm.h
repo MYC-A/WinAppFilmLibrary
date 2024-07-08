@@ -28,6 +28,8 @@ namespace WinAppFilmLibrary {
 			//
 		}
 		void UpdateListView();
+	private: System::Windows::Forms::Button^ button1_Unrelease;
+	public:
 		Movies^ movies;
 
 	protected:
@@ -100,6 +102,7 @@ namespace WinAppFilmLibrary {
 			this->label3_Rating = (gcnew System::Windows::Forms::Label());
 			this->label_to = (gcnew System::Windows::Forms::Label());
 			this->button1_Close = (gcnew System::Windows::Forms::Button());
+			this->button1_Unrelease = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// listView
@@ -252,11 +255,24 @@ namespace WinAppFilmLibrary {
 			this->button1_Close->UseVisualStyleBackColor = true;
 			this->button1_Close->Click += gcnew System::EventHandler(this, &SearcForm::button1_Close_Click);
 			// 
+			// button1_Unrelease
+			// 
+			this->button1_Unrelease->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1_Unrelease->Location = System::Drawing::Point(590, 89);
+			this->button1_Unrelease->Name = L"button1_Unrelease";
+			this->button1_Unrelease->Size = System::Drawing::Size(152, 56);
+			this->button1_Unrelease->TabIndex = 12;
+			this->button1_Unrelease->Text = L"Анонсы фильмов";
+			this->button1_Unrelease->UseVisualStyleBackColor = true;
+			this->button1_Unrelease->Click += gcnew System::EventHandler(this, &SearcForm::button1_Unrelease_Click);
+			// 
 			// SearcForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1094, 726);
+			this->Controls->Add(this->button1_Unrelease);
 			this->Controls->Add(this->button1_Close);
 			this->Controls->Add(this->label_to);
 			this->Controls->Add(this->label3_Rating);
@@ -287,5 +303,6 @@ private: System::Void button1_Close_Click(System::Object^ sender, System::EventA
 private: System::Void textBox_RatingFrom_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
 private: System::Void textBox_Ratingto_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
 private: System::Void listView_MouseDoubleClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+private: System::Void button1_Unrelease_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }

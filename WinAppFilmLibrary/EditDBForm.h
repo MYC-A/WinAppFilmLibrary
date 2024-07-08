@@ -219,6 +219,8 @@ namespace WinAppFilmLibrary {
 			this->Controls->Add(this->button_Delete);
 			this->Controls->Add(this->button_Insert);
 			this->Controls->Add(this->listView);
+			this->MaximumSize = System::Drawing::Size(1105, 765);
+			this->MinimumSize = System::Drawing::Size(1105, 765);
 			this->Name = L"EditDBForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"EditDBForm";

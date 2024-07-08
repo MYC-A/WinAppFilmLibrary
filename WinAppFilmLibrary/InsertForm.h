@@ -157,6 +157,7 @@ namespace WinAppFilmLibrary {
 			this->textBox_Annotation->Location = System::Drawing::Point(127, 376);
 			this->textBox_Annotation->Multiline = true;
 			this->textBox_Annotation->Name = L"textBox_Annotation";
+			this->textBox_Annotation->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox_Annotation->Size = System::Drawing::Size(441, 98);
 			this->textBox_Annotation->TabIndex = 5;
 			this->textBox_Annotation->TextChanged += gcnew System::EventHandler(this, &InsertForm::textBox_Annotation_TextChanged);

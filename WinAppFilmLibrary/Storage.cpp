@@ -1,7 +1,9 @@
 #include "Storage.h"
 #include <iostream>
 #include "Movies.h"
+using namespace System::Windows::Forms;
 using namespace System::IO;
+
 
 void Storage::save_Id(int id)
 {
@@ -41,17 +43,28 @@ void Storage::save_AllMovie(Movies^movies)
 
 void Storage::load_Movie(Movies^ movies)
 {
-    StreamReader^ sr = gcnew StreamReader("C:\\Movie_Library\\DB\\MovieDB.txt");
+    StreamReader^ sr;
     String^ line;
+    try {
+        sr = gcnew StreamReader("C:\\Movie_Library\\DB\\MovieDB.txt");
+    }
+    catch (System::Exception^ e) {
+        MessageBox::Show("Файл не найден", "Предупреждение", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+        return;
+    }
 
     while ((line = sr->ReadLine()) != nullptr) {
         //if (line == "") {
         	//break;
         //}
         array<String^>^ data = line->Split('|');
-        Movie^ movie = gcnew Movie(Convert::ToInt32(data[0]), data[1], data[2], Convert::ToDateTime(data[3]), data[4]->Split(','), Convert::ToDouble(data[5]), data[6]);
-        movies->addMovie(movie);
-
+        try {
+            Movie^ movie = gcnew Movie(Convert::ToInt32(data[0]), data[1], data[2], Convert::ToDateTime(data[3]), data[4]->Split(','), Convert::ToDouble(data[5]), data[6]);
+            movies->addMovie(movie);
+        }
+        catch (System::Exception^e) {
+            MessageBox::Show("Не корректные параметры в файле", "Предупреждение", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+        }
         //this->movieList->Add(movie);
         
         //line = sr->ReadLine();

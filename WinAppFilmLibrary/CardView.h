@@ -105,9 +105,9 @@ namespace WinAppFilmLibrary {
 			this->label1->BackColor = System::Drawing::SystemColors::Control;
 			this->label1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label1->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
-			this->label1->Location = System::Drawing::Point(319, 9);
+			this->label1->Location = System::Drawing::Point(298, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(272, 311);
+			this->label1->Size = System::Drawing::Size(302, 311);
 			this->label1->TabIndex = 14;
 			// 
 			// textBox1_Release
@@ -119,7 +119,7 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Release->Location = System::Drawing::Point(408, 258);
 			this->textBox1_Release->Name = L"textBox1_Release";
 			this->textBox1_Release->ReadOnly = true;
-			this->textBox1_Release->Size = System::Drawing::Size(172, 25);
+			this->textBox1_Release->Size = System::Drawing::Size(183, 25);
 			this->textBox1_Release->TabIndex = 22;
 			// 
 			// dateTimePicker1
@@ -129,7 +129,7 @@ namespace WinAppFilmLibrary {
 				static_cast<System::Byte>(204)));
 			this->dateTimePicker1->Location = System::Drawing::Point(419, 130);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(161, 25);
+			this->dateTimePicker1->Size = System::Drawing::Size(172, 25);
 			this->dateTimePicker1->TabIndex = 23;
 			// 
 			// label1_Release
@@ -151,7 +151,7 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Genre->Location = System::Drawing::Point(408, 197);
 			this->textBox1_Genre->Name = L"textBox1_Genre";
 			this->textBox1_Genre->ReadOnly = true;
-			this->textBox1_Genre->Size = System::Drawing::Size(172, 25);
+			this->textBox1_Genre->Size = System::Drawing::Size(183, 25);
 			this->textBox1_Genre->TabIndex = 21;
 			// 
 			// textBox1_Title
@@ -163,7 +163,7 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Title->Location = System::Drawing::Point(419, 21);
 			this->textBox1_Title->Name = L"textBox1_Title";
 			this->textBox1_Title->ReadOnly = true;
-			this->textBox1_Title->Size = System::Drawing::Size(161, 25);
+			this->textBox1_Title->Size = System::Drawing::Size(172, 25);
 			this->textBox1_Title->TabIndex = 24;
 			// 
 			// label1_Genre
@@ -197,7 +197,7 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Rating->Location = System::Drawing::Point(419, 71);
 			this->textBox1_Rating->Name = L"textBox1_Rating";
 			this->textBox1_Rating->ReadOnly = true;
-			this->textBox1_Rating->Size = System::Drawing::Size(161, 25);
+			this->textBox1_Rating->Size = System::Drawing::Size(172, 25);
 			this->textBox1_Rating->TabIndex = 20;
 			// 
 			// label1_Rating
@@ -240,6 +240,7 @@ namespace WinAppFilmLibrary {
 			this->button1_Close->TabIndex = 28;
 			this->button1_Close->Text = L"Назад";
 			this->button1_Close->UseVisualStyleBackColor = true;
+			this->button1_Close->Click += gcnew System::EventHandler(this, &CardView::button1_Close_Click);
 			// 
 			// label1_Annotation
 			// 
@@ -261,6 +262,7 @@ namespace WinAppFilmLibrary {
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->ReadOnly = true;
+			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox1->Size = System::Drawing::Size(579, 121);
 			this->textBox1->TabIndex = 26;
 			// 
@@ -299,5 +301,6 @@ namespace WinAppFilmLibrary {
 	private: System::Void CardView_Load(System::Object^ sender, System::EventArgs^ e);
 private: System::Void CardView_Leave(System::Object^ sender, System::EventArgs^ e);
 private: System::Void CardView_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
+private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }

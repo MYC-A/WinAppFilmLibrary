@@ -35,7 +35,7 @@ System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ se
 
 		count++;
 		String^ tmp_Poster = textBox_Poster->Text;
-		String^ tmp_Title = textBox_Title->Text;
+		String^ tmp_Title = textBox_Title->Text->Trim();
 		String^ tmp_Annotation = textBox_Annotation->Text;
 		DateTime tmp_Data = dateTimePicker1->Value;
 		array<String^>^ tmp_Genre = textBox_Genre->Text->Split(',');
@@ -62,7 +62,7 @@ System::Void WinAppFilmLibrary::InsertForm::button1_Load_Click(System::Object^ s
 {
 	OpenFileDialog^ ofd = gcnew OpenFileDialog();
 	//Отображение 
-	ofd->Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG|All files(*.*)|*.*";
+	ofd->Filter = "Image Files(*.BMP;*.JPG;*.PNG;*.ICO)|*.BMP;*.JPG;*.PNG;*.ICO|All files(*.*)|*.*";
 	if (pictureBox1_Poster->Image != nullptr)
 	{
 		delete pictureBox1_Poster->Image;

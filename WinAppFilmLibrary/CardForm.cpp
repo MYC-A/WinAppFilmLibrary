@@ -108,7 +108,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 	if (flag) {
 		count++;
 		String^ tmp_Poster = this->textBox_Poster->Text;
-		String^ tmp_Title = this->textBox1_Title->Text;
+		String^ tmp_Title = this->textBox1_Title->Text->Trim();
 		String^ tmp_Annotation = textBox1->Text;
 		DateTime tmp_Data = this->dateTimePicker1->Value;
 		bool tmp_Release = (tmp_Data <= DateTime::Now.Date);
@@ -167,7 +167,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_LoadN_Click(System::Object^ se
 {
 	OpenFileDialog^ ofd = gcnew OpenFileDialog();
 	//Отображение 
-	ofd->Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG|All files(*.*)|*.*";
+	ofd->Filter = "Image Files(*.BMP;*.JPG;*.PNG;*.ICO)|*.BMP;*.JPG;*.PNG;*.ICO|All files(*.*)|*.*";
 	if (pictureBox1->Image != nullptr)
 	{
 		delete pictureBox1->Image;

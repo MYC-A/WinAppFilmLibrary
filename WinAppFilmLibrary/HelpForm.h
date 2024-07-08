@@ -22,7 +22,7 @@ namespace WinAppFilmLibrary {
 			//TODO: добавьте код конструктора
 			//
 		}
-
+		
 	protected:
 		/// <summary>
 		/// Освободить все используемые ресурсы.
@@ -35,6 +35,7 @@ namespace WinAppFilmLibrary {
 			}
 		}
 	private: System::Windows::Forms::RichTextBox^ richTextBox_HelpText;
+		   void load();
 	protected:
 
 	protected:

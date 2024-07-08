@@ -134,6 +134,8 @@ namespace WinAppFilmLibrary {
 			this->Controls->Add(this->button1_Close);
 			this->Controls->Add(this->pictureBox1_Background);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MaximumSize = System::Drawing::Size(1105, 765);
+			this->MinimumSize = System::Drawing::Size(1105, 765);
 			this->Name = L"MenuForm1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"MenuForm1";

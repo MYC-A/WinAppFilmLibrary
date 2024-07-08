@@ -141,6 +141,7 @@ namespace WinAppFilmLibrary {
 			this->textBox1->Location = System::Drawing::Point(16, 403);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
+			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox1->Size = System::Drawing::Size(568, 121);
 			this->textBox1->TabIndex = 6;
 			// 
