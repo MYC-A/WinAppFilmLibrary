@@ -26,7 +26,6 @@ namespace WinAppFilmLibrary {
 			//
 		}
 		void UpdateListView();
-		void GB();
 
 		void AddForDisplays(int Num_additions);
 		void EditForDisplays(String^ Name, int index,int Num_additions);

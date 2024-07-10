@@ -11,7 +11,6 @@ public:
 	static void save_AllMovie(Movies^ movies); //сохранение списка фильмов
 	static void load_Movie(Movies^ movies); //загрузка фильмов из файла 
 
-	List<Movie^>^ find_UnRelease_Movie(); // Поиск не вышедших фильмов
 	Storage() {
 	}
 

@@ -9,43 +9,58 @@ void WinAppFilmLibrary::CardView::ShowItem()
 	}
 	if (SuitableMovie == nullptr)
 	{
-		//this->SuitableMovie = this->movies->find_Movie_index(this->index);
-		this->SuitableMovie = this->parent->movies->find_Movie_id(this->index);
+		this->SuitableMovie = this->parent->movies->find_Movie_id(this->index); // Поиск фильма для отображения данных 
 	}
 
-	this->textBox_Poster->Text = SuitableMovie->Poster;
+	//Заполнение данных в форме
 
-	this->textBox1_Rating->Text = SuitableMovie->Rating.ToString();
+	this->textBox_Poster->Text = SuitableMovie->Poster;
 
 	textBox1_Title->Text = SuitableMovie->Title;
 
 	this->textBox1_Genre->Text = String::Join(", ", SuitableMovie->Genre);
 
-	this->textBox1_Release->Text = SuitableMovie->Release.ToString();
+
+
+
+	if (SuitableMovie->Release) {
+		this->textBox1_Release->Text = "Состоялся";
+	}
+	else {
+		this->textBox1_Release->Text = "Ожидается";
+	}
 
 	this->dateTimePicker1->Value = SuitableMovie->Data;
 
+	if (SuitableMovie->Release) {
+		this->textBox1_Rating->Text = SuitableMovie->Rating.ToString();
+	}
+	else {
+		this->textBox1_Rating->Text = "-";
+	}
+
 	this->textBox1->Text = SuitableMovie->Annotation;
 
-	img = gcnew Bitmap(SuitableMovie->Poster); //
+
+	img = gcnew Bitmap(SuitableMovie->Poster); //Создание изображения
 	this->pictureBox1->Image = img;
 	return System::Void();
 }
 
 System::Void WinAppFilmLibrary::CardView::CardView_Load(System::Object^ sender, System::EventArgs^ e)
 {
-	parent = dynamic_cast<SearcForm^>(this->Owner);
+	parent = dynamic_cast<SearcForm^>(this->Owner); //Информация о родителе
 	ShowItem();
 	return System::Void();
 }
 
-System::Void WinAppFilmLibrary::CardView::CardView_Leave(System::Object^ sender, System::EventArgs^ e)
-{
-	img = nullptr;
+System::Void WinAppFilmLibrary::CardView::CardView_Leave(System::Object^ sender, System::EventArgs^ e) //Удалить
+{   //Проверить по память
+	img = nullptr; 
 	delete img;
 	this->pictureBox1 = nullptr;
 	delete this->pictureBox1;
-	System::GC::Collect();
+	System::GC::Collect(); //очищение памяти
 	return System::Void();
 }
 

@@ -54,9 +54,7 @@ void Storage::load_Movie(Movies^ movies)
     }
 
     while ((line = sr->ReadLine()) != nullptr) {
-        //if (line == "") {
-        	//break;
-        //}
+     
         array<String^>^ data = line->Split('|');
         try {
             Movie^ movie = gcnew Movie(Convert::ToInt32(data[0]), data[1], data[2], Convert::ToDateTime(data[3]), data[4]->Split(','), Convert::ToDouble(data[5]), data[6]);
@@ -65,18 +63,9 @@ void Storage::load_Movie(Movies^ movies)
         catch (System::Exception^e) {
             MessageBox::Show("Не корректные параметры в файле", "Предупреждение", MessageBoxButtons::OK, MessageBoxIcon::Warning);
         }
-        //this->movieList->Add(movie);
-        
-        //line = sr->ReadLine();
     }
     sr->Close();
     
     return;
 }
 
-
-List<Movie^>^ Storage::find_UnRelease_Movie()
-{
-    throw gcnew System::NotImplementedException();
-    // TODO: вставьте здесь оператор return
-}

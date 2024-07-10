@@ -210,6 +210,7 @@ namespace WinAppFilmLibrary {
 			this->dateTimePicker1->Name = L"dateTimePicker1";
 			this->dateTimePicker1->Size = System::Drawing::Size(200, 20);
 			this->dateTimePicker1->TabIndex = 11;
+			this->dateTimePicker1->ValueChanged += gcnew System::EventHandler(this, &InsertForm::dateTimePicker1_ValueChanged);
 			// 
 			// button_Save
 			// 
@@ -312,5 +313,6 @@ private: System::Void textBox_Rating_KeyPress(System::Object^ sender, System::Wi
 private: System::Void textBox_Genre_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
 private: System::Void button_Clear_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void button_Close_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e);
 };
 }

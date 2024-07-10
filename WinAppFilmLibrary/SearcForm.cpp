@@ -5,7 +5,6 @@ void WinAppFilmLibrary::SearcForm::UpdateListView()
 {
 	listView->Items->Clear();
 	listView->DataBindings->Clear();
-	System::GC::Collect();//Сборка мусора
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
 	imageList->ImageSize = System::Drawing::Size(120, 110);
@@ -19,17 +18,21 @@ void WinAppFilmLibrary::SearcForm::UpdateListView()
 		item->ImageIndex = count++;
 		imageList->Images->Add(movie->Id.ToString(), a);
 
-
 		item->SubItems->Add(movie->Title);
 		item->SubItems->Add(movie->Data.ToShortDateString());
 		item->SubItems->Add(String::Join(", ", movie->Genre));
-		item->SubItems->Add(movie->Rating.ToString());
-		item->SubItems->Add(movie->Annotation);
+		if (movie->Release) {
+			item->SubItems->Add(movie->Rating.ToString());
+		}
+		else {
+			item->SubItems->Add("-");
+		}		item->SubItems->Add(movie->Annotation);
 		item->SubItems->Add(movie->Id.ToString());
 		listView->Items->Add(item);
 	}
 	listView->SmallImageList = imageList;
 	listView->EndUpdate();
+	System::GC::Collect();//Сборка мусора
 	return;
 }
 
@@ -43,43 +46,67 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 
 	//String^ stRatingto = textBox_Ratingto->Text;
 	//stRatingto = stRatingto->Replace(" ", "");
-	bool Rating_flag = false;
+
+	bool Rating_flag = true;
 
 	double tmp_RatingFrom;
 	double tmp_Ratingto;
-	if (this->textBox_RatingFrom->Text->Length > 0 && this->textBox_Ratingto->Text->Length > 0) {
-		try {
-			double tmp_RatingFrom1 = Convert::ToDouble(this->textBox_RatingFrom->Text);
-			double tmp_Ratingto1 = Convert::ToDouble(this->textBox_Ratingto->Text);
-			tmp_RatingFrom = tmp_RatingFrom1;
-			tmp_Ratingto = tmp_Ratingto1;
-			Rating_flag = true;
-			//if (tmp_Ratingto == 0) {
 
+	try {
+		if (textBox_RatingFrom->Text->Length == 0 && textBox_Ratingto->Text->Length == 0) {
+			Rating_flag = false;
 		}
-		catch (System::Exception^) {
-			MessageBox::Show(L"Не корректный ввод", L"Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Information);
-
+		else if (textBox_RatingFrom->Text->Length == 0)
+		{
+			tmp_Ratingto = Convert::ToDouble(this->textBox_Ratingto->Text);
+			tmp_RatingFrom = 0;
+		}
+		else if (textBox_Ratingto->Text->Length == 0) {
+			tmp_RatingFrom = Convert::ToDouble(this->textBox_RatingFrom->Text);
+			tmp_Ratingto = 10;
+		}
+		else {
+			tmp_RatingFrom = Convert::ToDouble(this->textBox_RatingFrom->Text);
+			tmp_Ratingto = Convert::ToDouble(this->textBox_Ratingto->Text);
+			if (tmp_Ratingto.CompareTo(tmp_RatingFrom) < 0) {
+				MessageBox::Show("Неправильный ввод рейтинга", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				return System::Void();
+			}
 		}
 	}
+	catch (System::Exception^) {
+		Rating_flag = false;
+	}
 
+	DateTime tmp_DataFrom; //Data
+	DateTime tmp_DataTo; // Data1
 
-	String^ stdateTime = nullptr;
 	if (dateTimePicker1->Checked) {
-		stdateTime = dateTimePicker1->Value.ToShortDateString();
+		tmp_DataFrom = dateTimePicker1->Value;
+		if (dateTimePicker2->Checked) {
+			tmp_DataTo = dateTimePicker2->Value;
+		}
+		else {
+			tmp_DataTo = dateTimePicker2->MaxDateTime;
+		}
 	}
+	else if (dateTimePicker2->Checked) {
+		tmp_DataTo = dateTimePicker2->Value;
+		tmp_DataFrom = dateTimePicker1->MinDateTime;
+	}
+
 
 		if (!String::IsNullOrWhiteSpace(stSearch)) 
 		{
-			if (stdateTime != nullptr)
+			if (dateTimePicker1->Checked || dateTimePicker2->Checked)
 			{
 				if (Rating_flag)
 				{
-					list_view_movie = movies->find_Movie(textBox1_Search->Text->Trim(), dateTimePicker1->Value, tmp_RatingFrom, tmp_Ratingto);
+					list_view_movie = movies->find_Movie(textBox1_Search->Text->Trim(), tmp_DataFrom,tmp_DataTo, tmp_RatingFrom, tmp_Ratingto);
 				}
 				else
 				{
-					list_view_movie = movies->find_Movie(textBox1_Search->Text->Trim(), dateTimePicker1->Value);
+					list_view_movie = movies->find_Movie(textBox1_Search->Text->Trim(), tmp_DataFrom, tmp_DataTo);
 				}
 			}
 			else if (Rating_flag)
@@ -93,14 +120,16 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 			UpdateListView();
 		}
 
-		else if (stdateTime != nullptr)
+		else if (dateTimePicker1->Checked || dateTimePicker2->Checked)
 		{
 			if (Rating_flag)
 			{
-				list_view_movie = movies->find_Movie(dateTimePicker1->Value, tmp_RatingFrom, tmp_Ratingto);
+				list_view_movie = movies->find_Movie(tmp_DataFrom, tmp_DataTo, tmp_RatingFrom, tmp_Ratingto);
 			}
 			else {
-				list_view_movie = movies->find_Movie(dateTimePicker1->Value);
+				list_view_movie = movies->find_Movie(tmp_DataFrom, tmp_DataTo);
+				//dateTimePicker1->Checked = false;
+				//dateTimePicker2->Checked = false;
 			}
 			UpdateListView();
 		}
@@ -116,10 +145,7 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Search_Click(System::Object^ 
 		//textBox1_Search->Clear();
 
     //dateTimePicker1->Checked
-	
 
-    list_view_movie;
-    
     return System::Void();
 }
 
@@ -168,6 +194,11 @@ System::Void WinAppFilmLibrary::SearcForm::textBox_RatingFrom_KeyPress(System::O
 	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
 		e->Handled = true;
 	}
+								// Назвн textBox
+	if (e->KeyChar == ',' && textBox_RatingFrom->Text->Length == 0) {
+		e->Handled = true; //Проверка, на запятую после числа
+
+	}
 
 	// Проверка на ввод вещественных чисел от 0 до 10
 	if (e->KeyChar == ',') {
@@ -194,10 +225,15 @@ System::Void WinAppFilmLibrary::SearcForm::textBox_RatingFrom_KeyPress(System::O
 
 System::Void WinAppFilmLibrary::SearcForm::textBox_Ratingto_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
 {
-	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
+																				//Символ выделения
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08 && e->KeyChar != 0x03) {
 		e->Handled = true;
 	}
 
+	if (e->KeyChar == ',' && textBox_Ratingto->Text->Length == 0) {
+		e->Handled = true; //Проверка, на запятую после числа
+
+	}
 	// Проверка на ввод вещественных чисел от 0 до 10
 	if (e->KeyChar == ',') {
 		// Проверка на наличие только одной точки
@@ -209,6 +245,8 @@ System::Void WinAppFilmLibrary::SearcForm::textBox_Ratingto_KeyPress(System::Obj
 	{
 		e->Handled = true;
 	}
+
+	
 	//if ( (textBox_Rating->Text->StartsWith("0") && e->KeyChar != ',') )
 	//{e->Handled = true;}
 	if (Char::IsDigit(e->KeyChar)) {
@@ -237,5 +275,31 @@ System::Void WinAppFilmLibrary::SearcForm::button1_Unrelease_Click(System::Objec
 {
 	list_view_movie = movies->find_UnRelease_Movie();
 	UpdateListView();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::SearcForm::dateTimePicker2_ValueChanged(System::Object^ sender, System::EventArgs^ e)
+{
+	DateTimePicker^ dtp = dynamic_cast<DateTimePicker^>(sender);
+	if (!dtp->ShowCheckBox || dtp->Checked)
+	{
+		
+		if (dateTimePicker1->Checked) {
+			dateTimePicker2->MinDate = dateTimePicker1->Value;
+		}
+		else {
+			dateTimePicker2->MinDate = dateTimePicker2->MinDateTime;
+		}
+		
+		// Устанавливаем формат, если флажок не отображается либо выбрана дата
+		dtp->CustomFormat = "dd-MM-yyyy";
+	}
+	else
+	{
+		// Скрываем дату, если флажок не установлен
+		dtp->CustomFormat = "'";
+	}
+	//dateTimePicker2->MinDate = dateTimePicker1->Value;
+	
 	return System::Void();
 }

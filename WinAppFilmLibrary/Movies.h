@@ -29,17 +29,17 @@ public:
 	Movie^ getMovie(int index);
 
 	List<Movie^>^ getmovieList();
-	List<Movie^>^ find_Movie(String^ Title, DateTime Data, double Rating_From, double Rating_to);//Поиск фильма по названию, дате и жанру
+	List<Movie^>^ find_Movie(String^ Title, DateTime Data, DateTime Data1, double Rating_From, double Rating_to);//Поиск фильма по названию, дате и жанру
 
-	List<Movie^>^ find_Movie(String^ Title, DateTime Data); //Перегрузка метода
+	List<Movie^>^ find_Movie(String^ Title, DateTime Data, DateTime Data1); //Перегрузка метода
 
 	List<Movie^>^ find_Movie(String^ Title, double Rating_From, double Rating_to); //Перегрузка метода
 
-	List<Movie^>^ find_Movie(DateTime Data, double Rating_From, double Rating_to); //Перегрузка метода
+	List<Movie^>^ find_Movie(DateTime Data, DateTime Data1, double Rating_From, double Rating_to); //Перегрузка метода
 
 	List<Movie^>^ find_Movie(String^ Title); //Перегрузка метода
 
-	List<Movie^>^ find_Movie(DateTime Data); //Перегрузка метода
+	List<Movie^>^ find_Movie(DateTime Data, DateTime Data1); //Перегрузка метода
 
 	List<Movie^>^ find_Movie(double Rating_From, double Rating_to); //Перегрузка метода
 

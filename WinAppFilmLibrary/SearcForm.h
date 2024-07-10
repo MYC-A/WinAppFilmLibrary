@@ -29,6 +29,8 @@ namespace WinAppFilmLibrary {
 		}
 		void UpdateListView();
 	private: System::Windows::Forms::Button^ button1_Unrelease;
+	private: System::Windows::Forms::DateTimePicker^ dateTimePicker2;
+	private: System::Windows::Forms::Label^ label1;
 	public:
 		Movies^ movies;
 
@@ -103,6 +105,8 @@ namespace WinAppFilmLibrary {
 			this->label_to = (gcnew System::Windows::Forms::Label());
 			this->button1_Close = (gcnew System::Windows::Forms::Button());
 			this->button1_Unrelease = (gcnew System::Windows::Forms::Button());
+			this->dateTimePicker2 = (gcnew System::Windows::Forms::DateTimePicker());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// listView
@@ -195,7 +199,7 @@ namespace WinAppFilmLibrary {
 			this->dateTimePicker1->Location = System::Drawing::Point(125, 63);
 			this->dateTimePicker1->Name = L"dateTimePicker1";
 			this->dateTimePicker1->ShowCheckBox = true;
-			this->dateTimePicker1->Size = System::Drawing::Size(247, 20);
+			this->dateTimePicker1->Size = System::Drawing::Size(172, 20);
 			this->dateTimePicker1->TabIndex = 6;
 			this->dateTimePicker1->ValueChanged += gcnew System::EventHandler(this, &SearcForm::dateTimePicker1_ValueChanged);
 			// 
@@ -267,11 +271,36 @@ namespace WinAppFilmLibrary {
 			this->button1_Unrelease->UseVisualStyleBackColor = true;
 			this->button1_Unrelease->Click += gcnew System::EventHandler(this, &SearcForm::button1_Unrelease_Click);
 			// 
+			// dateTimePicker2
+			// 
+			this->dateTimePicker2->Checked = false;
+			this->dateTimePicker2->CustomFormat = L"\'";
+			this->dateTimePicker2->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
+			this->dateTimePicker2->Location = System::Drawing::Point(359, 63);
+			this->dateTimePicker2->Name = L"dateTimePicker2";
+			this->dateTimePicker2->ShowCheckBox = true;
+			this->dateTimePicker2->Size = System::Drawing::Size(172, 20);
+			this->dateTimePicker2->TabIndex = 13;
+			this->dateTimePicker2->ValueChanged += gcnew System::EventHandler(this, &SearcForm::dateTimePicker2_ValueChanged);
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Constantia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1->Location = System::Drawing::Point(314, 60);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(30, 23);
+			this->label1->TabIndex = 14;
+			this->label1->Text = L"до";
+			// 
 			// SearcForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1094, 726);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->dateTimePicker2);
 			this->Controls->Add(this->button1_Unrelease);
 			this->Controls->Add(this->button1_Close);
 			this->Controls->Add(this->label_to);
@@ -304,5 +333,6 @@ private: System::Void textBox_RatingFrom_KeyPress(System::Object^ sender, System
 private: System::Void textBox_Ratingto_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
 private: System::Void listView_MouseDoubleClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
 private: System::Void button1_Unrelease_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void dateTimePicker2_ValueChanged(System::Object^ sender, System::EventArgs^ e);
 };
 }

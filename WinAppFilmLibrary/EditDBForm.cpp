@@ -9,12 +9,13 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 	listView->BeginUpdate();
 	ImageList^ imageList = gcnew ImageList();
 	imageList->ImageSize = System::Drawing::Size(110, 120); //
-	System::GC::Collect();//Сборка мусора
 	//List<Movie^>^ movieList1 = movies->getmovieList();
 	for each (Movie ^ movie in movies->getmovieList())
-	{   //Bitmap
+	{
+		//Добавление в ListView
+
 		Bitmap^ a = gcnew Bitmap(movie->Poster);
-				
+
 		ListViewItem^ item = gcnew ListViewItem();
 
 
@@ -25,22 +26,19 @@ void WinAppFilmLibrary::EditDBForm::UpdateListView()
 		item->SubItems->Add(movie->Title);
 		item->SubItems->Add(movie->Data.ToShortDateString());
 		item->SubItems->Add(String::Join(", ", movie->Genre));
-		item->SubItems->Add(movie->Rating.ToString());
+		if (movie->Release) {
+			item->SubItems->Add(movie->Rating.ToString());
+		}
+		else {
+			item->SubItems->Add("-");
+		}
 		item->SubItems->Add(movie->Annotation);
 		item->SubItems->Add(movie->Id.ToString());
 		listView->Items->Add(item);
-		//a = nullptr;
-		//delete a;
+		
 	}
 	listView->SmallImageList = imageList;
 	listView->EndUpdate();
-	System::GC::Collect(); //Добавить
-	return;
-}
-
-void WinAppFilmLibrary::EditDBForm::GB()
-{
-	System::GC::Collect();
 	return;
 }
 
@@ -53,23 +51,27 @@ void WinAppFilmLibrary::EditDBForm::AddForDisplays(int Num_additions)
 
 	item->Name = movie1->Id.ToString();
 	ImageList^ imageList = listView->SmallImageList;
-	//int count = listView->SmallImageList->Images->Count + 1;
 
-	//item->ImageIndex = count;
+	//Добавление в ListView
 	imageList->Images->Add(movie1->Id.ToString(), gcnew Bitmap(movie1->Poster));
-	//imageList->Images->Add(movie1->Id.ToString(), gcnew Bitmap(movie1->Poster));
+
 	item->ImageKey = movie1->Id.ToString();
 
 	item->SubItems->Add(movie1->Title);
 	item->SubItems->Add(movie1->Data.ToShortDateString());
 	item->SubItems->Add(String::Join(", ", movie1->Genre));
-	item->SubItems->Add(movie1->Rating.ToString());
+
+	if (movie1->Release) {
+		item->SubItems->Add(movie1->Rating.ToString());
+	}
+	else {
+		item->SubItems->Add("-");
+	}
 	item->SubItems->Add(movie1->Annotation);
 	item->SubItems->Add(movie1->Id.ToString());
 	listView->Items->Add(item);
 
 	listView->SmallImageList = imageList;
-	//imageList = nullptr;
 	movie1 = nullptr;
 	item = nullptr;
 
@@ -77,7 +79,7 @@ void WinAppFilmLibrary::EditDBForm::AddForDisplays(int Num_additions)
 	delete item;
 	//delete imageList;
 	if (Num_additions % 10 == 0) {
-		System::GC::Collect();
+		System::GC::Collect(); //Проверка на очищение памяти, если пользователь подряд будет добавлять один и тот же объект
 	}
 }
 
@@ -85,7 +87,7 @@ void WinAppFilmLibrary::EditDBForm::EditForDisplays(String^ Name, int id,int Num
 {
 	int index = movies->getIndex(id);
 
-	String^ a = Name;
+	String^ a = Name; // Замена на Name
 	ListViewItem^ item = listView->Items[a];
 
 	System::Drawing::Bitmap^ original = gcnew System::Drawing::Bitmap(movies->getMovie(index)->Poster);
@@ -94,23 +96,28 @@ void WinAppFilmLibrary::EditDBForm::EditForDisplays(String^ Name, int id,int Num
 	System::Drawing::Bitmap^ resized = gcnew System::Drawing::Bitmap(original, System::Drawing::Size(newWidth, newHeight));
 
 	ImageList^ imageList = listView->SmallImageList;
-	int j = imageList->Images->IndexOfKey(a);
-	imageList->Images[j] = resized;
+	int j = imageList->Images->IndexOfKey(a); // Находим ссылку на исходное изображение  
+	imageList->Images[j] = resized; //Замменяем исходное изображение
 
+	//Изменяем данные в ListView
 
-	item->SubItems[1]->Text = movies->getMovie(index)->Title;
+	item->SubItems[1]->Text = movies->getMovie(index)->Title; 
 	item->SubItems[2]->Text = movies->getMovie(index)->Data.ToShortDateString();
 	item->SubItems[3]->Text = String::Join(", ", movies->getMovie(index)->Genre);
-	item->SubItems[4]->Text = movies->getMovie(index)->Rating.ToString();
+	if (movies->getMovie(index)->Release) {
+		item->SubItems[4]->Text = movies->getMovie(index)->Rating.ToString();
+	}
+	else {
+		item->SubItems[4]->Text = "-";
+	}
 	listView->Refresh();
 	if (Num_additions % 10 == 0) {
-		System::GC::Collect();
+		System::GC::Collect(); //Проверка на очищение памяти, если пользователь подряд будет вносить измененние в один и тот же объект
 	}
 }
 
 System::Void WinAppFilmLibrary::EditDBForm::button_Insert_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	//System::GC::Collect();
 
     InsertForm^ insertForm = gcnew InsertForm();
 	insertForm->Owner = this;
@@ -121,8 +128,7 @@ System::Void WinAppFilmLibrary::EditDBForm::button_Insert_Click(System::Object^ 
     insertForm->ShowDialog();
 	delete insertForm;
 	insertForm = nullptr;
-	//UpdateListView();
-	//System::GC::Collect();
+
 
     return System::Void();
 }
@@ -136,8 +142,8 @@ System::Void WinAppFilmLibrary::EditDBForm::listView_MouseDoubleClick(System::Ob
 	iftr->ShowDialog();
 	delete iftr; //Удяляем форму
 	iftr = nullptr; // стираем ссылку
-	//UpdateListView();
-	System::GC::Collect();
+
+	//System::GC::Collect();
 	
 	return System::Void();
 }
@@ -145,19 +151,13 @@ System::Void WinAppFilmLibrary::EditDBForm::listView_MouseDoubleClick(System::Ob
 System::Void WinAppFilmLibrary::EditDBForm::button_Delete_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	try {
-		int id = Convert::ToInt32(listView->SelectedItems[0]->SubItems[6]->Text);
+		int id = Convert::ToInt32(listView->SelectedItems[0]->SubItems[6]->Text); // Считывание id из экземпляра ListView
 		Movie^ delete_tmp_Movie;
-		String^ Name = listView->SelectedItems[0]->Name;
+		String^ Name = listView->SelectedItems[0]->Name; // Считывание Name изображения экземпляра ListView
 
-		delete_tmp_Movie = movies->find_Movie_id(id);
+		delete_tmp_Movie = movies->find_Movie_id(id); //Поиск фильма д
 		movies->deleteMovie(delete_tmp_Movie);
-		//for each (Movie ^ movie in movies->getmovieList()) {
-			//if (movie->Id == id) {
-				//movies->deleteMovie(movie);
-				//break;
-			//}
-		//}
-		listView->Items->RemoveByKey(Name); //Перемтановка, нужно ли
+		listView->Items->RemoveByKey(Name); //Удаление с формы отображения
 	}
 	catch(System::Exception^){
 		MessageBox::Show("Выберите фильм", "Предупреждение", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -198,7 +198,7 @@ System::Void WinAppFilmLibrary::EditDBForm::button1_Duplicate_Click(System::Obje
 
 System::Void WinAppFilmLibrary::EditDBForm::EditDBForm_Load(System::Object^ sender, System::EventArgs^ e)
 {
-	System::GC::Collect();
+	System::GC::Collect(); //Очищение памяти после загрузки изображений в UpdateListView
 	return System::Void();
 }
 

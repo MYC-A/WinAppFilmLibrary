@@ -38,12 +38,12 @@ namespace WinAppFilmLibrary {
 			}
 		}
 	private: int index;
-		   Movie^ SuitableMovie;
-		   SearcForm^ parent;
+		   Movie^ SuitableMovie; // выбранный фильм
+		   SearcForm^ parent; // ѕеременна€ дл€ формы родител€
 		   Bitmap^ img;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ textBox1_Release;
+
 	private: System::Windows::Forms::DateTimePicker^ dateTimePicker1;
 	private: System::Windows::Forms::Label^ label1_Release;
 	private: System::Windows::Forms::TextBox^ textBox1_Genre;
@@ -57,6 +57,10 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::Button^ button1_Close;
 	private: System::Windows::Forms::Label^ label1_Annotation;
 	private: System::Windows::Forms::TextBox^ textBox1;
+
+	private: System::Windows::Forms::TextBox^ textBox1_Release;
+
+
 	protected:
 
 	private:
@@ -74,7 +78,6 @@ namespace WinAppFilmLibrary {
 		{
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1_Release = (gcnew System::Windows::Forms::TextBox());
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->label1_Release = (gcnew System::Windows::Forms::Label());
 			this->textBox1_Genre = (gcnew System::Windows::Forms::TextBox());
@@ -88,6 +91,7 @@ namespace WinAppFilmLibrary {
 			this->button1_Close = (gcnew System::Windows::Forms::Button());
 			this->label1_Annotation = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox1_Release = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -109,18 +113,6 @@ namespace WinAppFilmLibrary {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(302, 311);
 			this->label1->TabIndex = 14;
-			// 
-			// textBox1_Release
-			// 
-			this->textBox1_Release->BackColor = System::Drawing::Color::Snow;
-			this->textBox1_Release->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->textBox1_Release->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
-			this->textBox1_Release->Location = System::Drawing::Point(408, 258);
-			this->textBox1_Release->Name = L"textBox1_Release";
-			this->textBox1_Release->ReadOnly = true;
-			this->textBox1_Release->Size = System::Drawing::Size(183, 25);
-			this->textBox1_Release->TabIndex = 22;
 			// 
 			// dateTimePicker1
 			// 
@@ -266,6 +258,18 @@ namespace WinAppFilmLibrary {
 			this->textBox1->Size = System::Drawing::Size(579, 121);
 			this->textBox1->TabIndex = 26;
 			// 
+			// textBox1_Release
+			// 
+			this->textBox1_Release->BackColor = System::Drawing::Color::Snow;
+			this->textBox1_Release->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBox1_Release->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
+			this->textBox1_Release->Location = System::Drawing::Point(408, 258);
+			this->textBox1_Release->Name = L"textBox1_Release";
+			this->textBox1_Release->ReadOnly = true;
+			this->textBox1_Release->Size = System::Drawing::Size(183, 25);
+			this->textBox1_Release->TabIndex = 22;
+			// 
 			// CardView
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -302,5 +306,6 @@ namespace WinAppFilmLibrary {
 private: System::Void CardView_Leave(System::Object^ sender, System::EventArgs^ e);
 private: System::Void CardView_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e);
 private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
+
 };
 }

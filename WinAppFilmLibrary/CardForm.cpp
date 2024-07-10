@@ -2,21 +2,27 @@
 
 void WinAppFilmLibrary::CardForm::ShowItem()
 {
-	if (pictureBox1->Image != nullptr)
+	if (pictureBox1->Image != nullptr) 
 	{
-		delete img;
+		delete img; // Удаляем изображение для загрузки нового
 		delete pictureBox1->Image;
 	}
 	if (SuitableMovie == nullptr)
 	{
-		//this->SuitableMovie = this->movies->find_Movie_index(this->index);
 		this->SuitableMovie = this->parent->movies->find_Movie_id(this->index);
 	}
+
+	//Заполнение данных в форме
 
 	this->textBox_Poster->Text = SuitableMovie->Poster;
 	this->button1_LoadN->Visible = false;
 
-	this->textBox1_Rating->Text = SuitableMovie->Rating.ToString();
+	if (SuitableMovie->Release) {
+		this->textBox1_Rating->Text = SuitableMovie->Rating.ToString();
+	}
+	else {
+		this->textBox1_Rating->Text = "-";
+	}
 	this->textBox1_Rating->ReadOnly = true;
 
 	textBox1_Title->Text = SuitableMovie->Title;
@@ -25,8 +31,14 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 	this->textBox1_Genre->Text = String::Join(", ", SuitableMovie->Genre);
 	this->textBox1_Genre->ReadOnly = true;
 
-	this->textBox1_Release->Text = SuitableMovie->Release.ToString();
-	this->textBox1_Release->ReadOnly = true;
+
+	if (SuitableMovie->Release) {
+		this->label_ReleaseView->Text = "Состоялся";
+	}
+	else {
+		this->label_ReleaseView->Text = "Ожидается";
+	}
+	
 
 	this->dateTimePicker1->Value = SuitableMovie->Data;
 	this->dateTimePicker1->Enabled = false;
@@ -34,7 +46,6 @@ void WinAppFilmLibrary::CardForm::ShowItem()
 	this->textBox1->Text = SuitableMovie->Annotation;
 	this->textBox1->ReadOnly = true;
 	
-	//this->textBox2->ReadOnly = true;
 
 	img = gcnew Bitmap(SuitableMovie->Poster); //
 	this->pictureBox1->Image = img;
@@ -46,14 +57,17 @@ void WinAppFilmLibrary::CardForm::DisplayForm()
 {
 	this->textBox1_Title->ReadOnly = false;
 
-
-	this->textBox1_Rating->ReadOnly = false;
+	if (SuitableMovie->Release) {
+		this->textBox1_Rating->ReadOnly = false;
+	}
+	else {
+		this->textBox1_Rating->ReadOnly = true;
+	}
 
 
 	this->textBox1_Genre->ReadOnly = false;
 
 
-	this->textBox1_Release->ReadOnly = true;
 
 
 	this->dateTimePicker1->Enabled = true;
@@ -72,15 +86,15 @@ void WinAppFilmLibrary::CardForm::DisplayForm()
 	return;
 }
 
-bool WinAppFilmLibrary::CardForm::checking_for_occupancy()
+bool WinAppFilmLibrary::CardForm::checking_for_occupancy() // Проверка заполненности полей
 {
 	for each (Control ^ control in this->Controls)
 	{
 
-		TextBox^ textBox = dynamic_cast<TextBox^>(control);
+		TextBox^ textBox = dynamic_cast<TextBox^>(control);  // Ищем все TextBox
 		if (textBox != nullptr) {
 			String^ st = textBox->Text;
-			st = st->Replace(" ", "");
+			st = st->Replace(" ", ""); //Заменяем возможные пустые пробелы
 			if (!String::IsNullOrEmpty(textBox->Text))
 			{
 				continue;
@@ -106,7 +120,9 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 	bool flag = checking_for_occupancy();
 	
 	if (flag) {
-		count++;
+		count++; //Переменная для метода отображения изменений
+
+		//Сохранение данных во временные переменный
 		String^ tmp_Poster = this->textBox_Poster->Text;
 		String^ tmp_Title = this->textBox1_Title->Text->Trim();
 		String^ tmp_Annotation = textBox1->Text;
@@ -114,34 +130,45 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 		bool tmp_Release = (tmp_Data <= DateTime::Now.Date);
 		array<String^>^ tmp_Genre = this->textBox1_Genre->Text->Split(',');
 
+
 		String^ genres = String::Join(",", tmp_Genre);
-		genres = genres->Replace(" ", ""); // Удаляем все пробелы
+		genres = genres->Replace(" ", "");// Удаляем все пробелы
 		genres = genres->TrimEnd(','); // Удаляем последнюю запятую, если есть
+		genres = genres->TrimStart(',');//Удаляем запятые без слов запятую, если есть
+		
+		if (String::IsNullOrEmpty(genres)) {
+			MessageBox::Show("Некоректный ввод жанра", "Ошбка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			ShowItem();
+			this->button1_Save->Enabled = false;
+			this->button_Cancel->Enabled = false;             //Добавить
+			this->button1_Change->Enabled = true;
+			return System::Void();
+		}
 		
 		tmp_Genre = genres->Split(',');
 
+		
+
 		double tmp_Rating;
 		try {
-			double tmp_Rating1 = Convert::ToDouble(this->textBox1_Rating->Text);
-			tmp_Rating = tmp_Rating1;
+			if (tmp_Release) {
+
+				double tmp_Rating1 = Convert::ToDouble(this->textBox1_Rating->Text);
+				tmp_Rating = tmp_Rating1;
+			}
+			else {
+				tmp_Rating = 0;
+			}
 		}
 		catch (System::Exception^) {
 			MessageBox::Show("Некоректный ввод", "Ошбка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			ShowItem();
 			return System::Void();
 		}
-		parent->movies->Edit(this->index, tmp_Poster, tmp_Title, tmp_Annotation, tmp_Data, tmp_Genre,tmp_Rating, tmp_Release);
-		/*SuitableMovie->Poster = tmp_Poster;
-		SuitableMovie->Title = tmp_Title;
-		SuitableMovie->Annotation = tmp_Annotation;
-		SuitableMovie->Data = tmp_Data;
-		SuitableMovie->Genre = tmp_Genre;
-		SuitableMovie->Rating = tmp_Rating;
-		SuitableMovie->Release = tmp_Release;
-		*/
-		parent->EditForDisplays(SuitableMovie->Id.ToString(), index, count);
-		Storage::save_AllMovie(this->parent->movies);
-		System::GC::Collect();
+		parent->movies->Edit(this->index, tmp_Poster, tmp_Title, tmp_Annotation, tmp_Data, tmp_Genre,tmp_Rating, tmp_Release); //Изменение 
+		
+		parent->EditForDisplays(SuitableMovie->Id.ToString(), index, count); // Вызов формы для отображения изменений 
+		Storage::save_AllMovie(this->parent->movies); // Сохраняем полученные изменения в файле
 
 	}
 	else {
@@ -157,7 +184,6 @@ System::Void WinAppFilmLibrary::CardForm::button1_Save_Click(System::Object^ sen
 
 System::Void WinAppFilmLibrary::CardForm::CardForm_Load(System::Object^ sender, System::EventArgs^ e)
 {
-	System::GC::Collect();
 	parent = dynamic_cast<EditDBForm^>(this->Owner);
 	ShowItem();
 	return System::Void();
@@ -186,6 +212,7 @@ System::Void WinAppFilmLibrary::CardForm::button1_LoadN_Click(System::Object^ se
 		}
 	}
 	return System::Void();
+
 }
 
 System::Void WinAppFilmLibrary::CardForm::CardForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e)
@@ -202,8 +229,13 @@ System::Void WinAppFilmLibrary::CardForm::CardForm_FormClosing(System::Object^ s
 
 System::Void WinAppFilmLibrary::CardForm::textBox1_Rating_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
 {
-	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08 && e->KeyChar != 0x03) {
 		e->Handled = true;
+	}
+
+	if (e->KeyChar == ',' && textBox1_Rating->Text->Length == 0) {
+		e->Handled = true; //Проверка, на запятую после числа
+
 	}
 
 	// Проверка на ввод вещественных чисел от 0 до 10
@@ -231,6 +263,7 @@ System::Void WinAppFilmLibrary::CardForm::textBox1_Rating_KeyPress(System::Objec
 
 System::Void WinAppFilmLibrary::CardForm::textBox1_Genre_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
 {
+	
 	String^ Symbol = e->KeyChar.ToString();
 	if (!System::Text::RegularExpressions::Regex::IsMatch(Symbol, L"[а-яА-Яa-zA-Z, ]") &&
 		e->KeyChar != (char)Keys::Back && e->KeyChar != (char)Keys::Delete) {
@@ -238,8 +271,17 @@ System::Void WinAppFilmLibrary::CardForm::textBox1_Genre_KeyPress(System::Object
 		return;
 	}
 
+	//if (textBox1_Genre->SelectionLength > 0 && e->KeyChar != (char)Keys::Back && e->KeyChar != (char)Keys::Delete) {
+		// Пользователь пытается заменить выделенный текст
+		//e->Handled = true; // Отмечаем событие как обработанное
+	//}
 
 
+	if (Symbol == "," && textBox1_Genre->Text->Length == 0) {                   //Добавить
+		// Проверяем, не стоит ли запятая в нале текста
+			e->Handled = true;
+			return;
+	}
 	// Если текущий ввод - запятая
 	if (Symbol == ",") {
 		// Проверяем, не стоит ли запятая в конце текста
@@ -283,5 +325,22 @@ System::Void WinAppFilmLibrary::CardForm::button_Cancel_Click(System::Object^ se
 System::Void WinAppFilmLibrary::CardForm::button1_Close_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	this->Close();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::CardForm::dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e)
+{
+	if (dateTimePicker1->Value.Date <= DateTime::Now.Date) {
+		if (this->textBox1_Rating->Text->Equals("-")) {
+			this->textBox1_Rating->Clear();
+			this->textBox1_Rating->ReadOnly = false;
+		}
+
+	}
+	else
+	{
+		this->textBox1_Rating->Text = "-";
+		this->textBox1_Rating->ReadOnly = true;
+	}
 	return System::Void();
 }

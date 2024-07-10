@@ -39,7 +39,23 @@ System::Void WinAppFilmLibrary::InsertForm::button_Save_Click(System::Object^ se
 		String^ tmp_Annotation = textBox_Annotation->Text;
 		DateTime tmp_Data = dateTimePicker1->Value;
 		array<String^>^ tmp_Genre = textBox_Genre->Text->Split(',');
-		double tmp_Rating = Convert::ToDouble(textBox_Rating->Text);
+		//double tmp_Rating = Convert::ToDouble(textBox_Rating->Text);
+		double tmp_Rating;
+		try {
+			if (tmp_Data <= DateTime::Now.Date) {
+
+				double tmp_Rating1 = Convert::ToDouble(this->textBox_Rating->Text);
+				tmp_Rating = tmp_Rating1;
+			}
+			else {
+				tmp_Rating = 0;
+			}
+		}
+		catch (System::Exception^) {
+			MessageBox::Show("Некоректный ввод", "Ошбка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return System::Void();
+		}
+
 
 		Movie^ newMovie = gcnew Movie(tmp_index, tmp_Poster, tmp_Title, tmp_Data, tmp_Genre, tmp_Rating, tmp_Annotation);
 		parent->movies->addMovie(newMovie);
@@ -81,7 +97,6 @@ System::Void WinAppFilmLibrary::InsertForm::button1_Load_Click(System::Object^ s
 			MessageBox::Show("Невозможно открыть выбранный файл", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
-	System::GC::Collect();
 	return System::Void();
 }
 
@@ -106,8 +121,13 @@ System::Void WinAppFilmLibrary::InsertForm::InsertForm_Load(System::Object^ send
 
 System::Void WinAppFilmLibrary::InsertForm::textBox_Rating_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e)
 {
-	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08) {
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != 0x08 && e->KeyChar != 0x03) {
 		e->Handled = true;
+	}
+
+	if (e->KeyChar == ',' && textBox_Rating->Text->Length == 0) {
+		e->Handled = true; //Проверка, на запятую после числа
+
 	}
 
 	// Проверка на ввод вещественных чисел от 0 до 10
@@ -192,6 +212,23 @@ System::Void WinAppFilmLibrary::InsertForm::button_Clear_Click(System::Object^ s
 System::Void WinAppFilmLibrary::InsertForm::button_Close_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	this->Close();
+	return System::Void();
+}
+
+System::Void WinAppFilmLibrary::InsertForm::dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e)
+{
+	if (dateTimePicker1->Value.Date <= DateTime::Now.Date) {
+		if (this->textBox_Rating->Text->Equals("-")) {
+			this->textBox_Rating->Clear();
+			this->textBox_Rating->ReadOnly = false;
+		}
+
+	}
+	else
+	{
+		this->textBox_Rating->Text = "-";
+		this->textBox_Rating->ReadOnly = true;
+	}
 	return System::Void();
 }
 

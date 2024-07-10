@@ -68,13 +68,14 @@ namespace WinAppFilmLibrary {
 	private: System::Windows::Forms::TextBox^ textBox1_Genre;
 	private: System::Windows::Forms::DateTimePicker^ dateTimePicker1;
 	private: System::Windows::Forms::TextBox^ textBox1_Title;
-	private: System::Windows::Forms::TextBox^ textBox1_Release;
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ button1_LoadN;
 	private: System::Windows::Forms::TextBox^ textBox_Poster;
 	private: System::Windows::Forms::Button^ button_Cancel;
 
 	private: System::Windows::Forms::Button^ button1_Close;
+	private: System::Windows::Forms::Label^ label_ReleaseView;
 	private: System::ComponentModel::IContainer^ components;
 
 
@@ -114,12 +115,12 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Genre = (gcnew System::Windows::Forms::TextBox());
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->textBox1_Title = (gcnew System::Windows::Forms::TextBox());
-			this->textBox1_Release = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button1_LoadN = (gcnew System::Windows::Forms::Button());
 			this->textBox_Poster = (gcnew System::Windows::Forms::TextBox());
 			this->button_Cancel = (gcnew System::Windows::Forms::Button());
 			this->button1_Close = (gcnew System::Windows::Forms::Button());
+			this->label_ReleaseView = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -267,6 +268,7 @@ namespace WinAppFilmLibrary {
 			this->dateTimePicker1->Name = L"dateTimePicker1";
 			this->dateTimePicker1->Size = System::Drawing::Size(161, 25);
 			this->dateTimePicker1->TabIndex = 11;
+			this->dateTimePicker1->ValueChanged += gcnew System::EventHandler(this, &CardForm::dateTimePicker1_ValueChanged);
 			// 
 			// textBox1_Title
 			// 
@@ -278,17 +280,6 @@ namespace WinAppFilmLibrary {
 			this->textBox1_Title->Name = L"textBox1_Title";
 			this->textBox1_Title->Size = System::Drawing::Size(161, 25);
 			this->textBox1_Title->TabIndex = 12;
-			// 
-			// textBox1_Release
-			// 
-			this->textBox1_Release->BackColor = System::Drawing::Color::Snow;
-			this->textBox1_Release->Font = (gcnew System::Drawing::Font(L"Times New Roman", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->textBox1_Release->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
-			this->textBox1_Release->Location = System::Drawing::Point(402, 258);
-			this->textBox1_Release->Name = L"textBox1_Release";
-			this->textBox1_Release->Size = System::Drawing::Size(172, 25);
-			this->textBox1_Release->TabIndex = 10;
 			// 
 			// label1
 			// 
@@ -347,16 +338,26 @@ namespace WinAppFilmLibrary {
 			this->button1_Close->UseVisualStyleBackColor = true;
 			this->button1_Close->Click += gcnew System::EventHandler(this, &CardForm::button1_Close_Click);
 			// 
+			// label_ReleaseView
+			// 
+			this->label_ReleaseView->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->label_ReleaseView->Font = (gcnew System::Drawing::Font(L"Times New Roman", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label_ReleaseView->Location = System::Drawing::Point(402, 258);
+			this->label_ReleaseView->Name = L"label_ReleaseView";
+			this->label_ReleaseView->Size = System::Drawing::Size(172, 25);
+			this->label_ReleaseView->TabIndex = 18;
+			// 
 			// CardForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(771, 536);
+			this->Controls->Add(this->label_ReleaseView);
 			this->Controls->Add(this->button1_Close);
 			this->Controls->Add(this->button_Cancel);
 			this->Controls->Add(this->textBox_Poster);
 			this->Controls->Add(this->button1_LoadN);
-			this->Controls->Add(this->textBox1_Release);
 			this->Controls->Add(this->dateTimePicker1);
 			this->Controls->Add(this->label1_Release);
 			this->Controls->Add(this->textBox1_Genre);
@@ -397,5 +398,6 @@ private: System::Void textBox1_Rating_KeyPress(System::Object^ sender, System::W
 private: System::Void textBox1_Genre_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e);
 private: System::Void button_Cancel_Click(System::Object^ sender, System::EventArgs^ e);
 private: System::Void button1_Close_Click(System::Object^ sender, System::EventArgs^ e);
+private: System::Void dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e);
 };
 }

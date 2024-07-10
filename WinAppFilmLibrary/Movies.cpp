@@ -67,22 +67,22 @@ List<Movie^>^ Movies::getmovieList()
     return movieList;
 }
 
-List<Movie^>^ Movies::find_Movie(String^ Title, DateTime Data, double Rating_From, double Rating_to)
+List<Movie^>^ Movies::find_Movie(String^ Title, DateTime DataFrom, DateTime DataTo, double Rating_From, double Rating_to)
 {
     List<Movie^>^ lm = gcnew List<Movie^>();
     for (int i = 0; i < movieList->Count; i++) {
-        if ((movieList[i]->Title == Title) && (movieList[i]->Data.ToShortDateString() == Data.ToShortDateString()) && (movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to)) {
+        if ((movieList[i]->Title == Title) && (movieList[i]->Data.Date.CompareTo(DataFrom.Date) >= 0) && (movieList[i]->Data.Date.CompareTo(DataTo.Date) <= 0) && (movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to)) {
             lm->Add(movieList[i]);
         }
     }
     return lm;
 }
 
-List<Movie^>^ Movies::find_Movie(String^ Title, DateTime Data)
+List<Movie^>^ Movies::find_Movie(String^ Title, DateTime DataFrom, DateTime DataTo)
 {
     List<Movie^>^ lm = gcnew List<Movie^>();
     for (int i = 0; i < movieList->Count; i++) {
-        if ((movieList[i]->Title == Title) && (movieList[i]->Data.ToShortDateString() == Data.ToShortDateString())) {
+        if ( (movieList[i]->Title == Title) && (movieList[i]->Data.Date.CompareTo(DataFrom.Date) >= 0) && (movieList[i]->Data.Date.CompareTo(DataTo.Date) <= 0) ) {
             lm->Add(movieList[i]);
         }
     }
@@ -100,11 +100,12 @@ List<Movie^>^ Movies::find_Movie(String^ Title, double Rating_From, double Ratin
     return lm;
 }
 
-List<Movie^>^ Movies::find_Movie(DateTime Data, double Rating_From, double Rating_to)
+List<Movie^>^ Movies::find_Movie(DateTime DataFrom, DateTime DataTo, double Rating_From, double Rating_to)
 {
     List<Movie^>^ lm = gcnew List<Movie^>();
     for (int i = 0; i < movieList->Count; i++) {
-        if ((movieList[i]->Data.ToShortDateString() == Data.ToShortDateString()) && (movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to)) {
+        if ( (movieList[i]->Data.Date.CompareTo(DataFrom.Date) >= 0) && (movieList[i]->Data.Date.CompareTo(DataTo.Date) <= 0)
+            && (movieList[i]->Rating >= Rating_From && movieList[i]->Rating <= Rating_to) ) {
             lm->Add(movieList[i]);
         }
     }
@@ -122,11 +123,11 @@ List<Movie^>^ Movies::find_Movie(String^ Title)
     return lm;
 }
 
-List<Movie^>^ Movies::find_Movie(DateTime Data)
+List<Movie^>^ Movies::find_Movie(DateTime DataFrom, DateTime DataTo)
 {
     List<Movie^>^ lm = gcnew List<Movie^>();
     for (int i = 0; i < movieList->Count; i++) {
-        if (movieList[i]->Data.ToShortDateString() == Data.ToShortDateString()) {
+        if ( (movieList[i]->Data.Date.CompareTo(DataFrom.Date) >= 0) && (movieList[i]->Data.Date.CompareTo(DataTo.Date) <= 0) ) {
             lm->Add(movieList[i]);
         }
     }
